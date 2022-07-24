@@ -11,7 +11,7 @@ function App() {
         </p>
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://www.pokemon.com/us/pokedex/pichu"
           target="_blank"
           rel="noopener noreferrer"
         >
