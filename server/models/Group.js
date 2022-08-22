@@ -1,11 +1,29 @@
-var groupSchema = mongoose.Schema({
-    name: String,
-    about: String,
-    picture: String,
-    events : [Event.schema],
-    users: [User.schema],
-    created_on : {
-        type: [Date],
-        default: ''
-    } 
-})
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const GroupSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  about: {
+    type: String,
+  },
+  picture: {
+    type: String,
+  },
+  events: {
+    type: Schema.Types.ObjectId,
+    ref: "Event",
+  },
+  users: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  createdOn: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = mongoose.model("Group", GroupSchema);
