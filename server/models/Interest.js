@@ -10,7 +10,7 @@ const interestSchema = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: "User",
     },
-    created_on : {
+    createdOn : {
         type: Date,
         default: Date.now
     } 
