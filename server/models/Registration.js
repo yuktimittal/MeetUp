@@ -16,4 +16,4 @@ const registrationSchema = mongoose.Schema({
     } 
 });
 
-module.exports = mongoose.model("Group", GroupSchema);
+module.exports = mongoose.model("Registration", RegistrationSchema);
