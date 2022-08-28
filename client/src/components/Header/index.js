@@ -62,7 +62,7 @@ const Header = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <img style={{ width: '3rem' }} src={drinks} />
+          <img style={{ width: '3rem' }} src={drinks} alt="app-logo" />
           <Typography
             variant="h6"
             component="div"
