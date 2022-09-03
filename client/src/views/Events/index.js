@@ -1,9 +1,20 @@
+import React, { useEffect } from 'react';
 import EventCard from './EventCard';
 import './index.css';
 import Grid from '@mui/material/Grid';
 import { WELCOME_MSG, WELCOME_TEXT } from './constants';
+import axios from 'axios';
 
 const Events = () => {
+  const getUsers = async () => {
+    await axios
+      .get('/user')
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getUsers();
+  }, []);
   return (
     <div className="home-page">
       <div className="bg-image">
@@ -19,7 +30,13 @@ const Events = () => {
       >
         {[...Array(5)].map((_, i) => (
           <Grid key={i} item>
-            <EventCard />
+            <EventCard
+              eventTitle={'Nahargarh Trek'}
+              date={'September 10, 2022'}
+              eventDescription={
+                'This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.'
+              }
+            />
           </Grid>
         ))}
       </Grid>

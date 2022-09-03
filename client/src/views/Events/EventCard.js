@@ -12,20 +12,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import picture from 'assets/images/bg.jpg';
 
-const EventCard = () => {
+const EventCard = ({ eventTitle, date, eventDescription }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
-        title="Nahargarh Trek"
-        subheader="September 10, 2022"
+        title={eventTitle}
+        subheader={date}
         className="event-card-header"
       />
       <CardMedia component="img" height="194" image={picture} alt="Trek" />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {eventDescription}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
