@@ -8,7 +8,7 @@ exports.signup = (req, res) => {
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
   });
-  console.log('user', user);
+
   user.save((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -26,7 +26,7 @@ exports.signin = (req, res) => {
       res.status(500).send({ message: err });
       return;
     }
-    console.log('user', user);
+
     if (!user) {
       return res.status(404).send({ message: 'User Not found.' });
     }
@@ -37,11 +37,10 @@ exports.signin = (req, res) => {
         message: 'Invalid Password!',
       });
     }
-    console.log('token');
+
     var token = jwt.sign({ id: user._id }, config.secret, {
       expiresIn: 86400, // 24 hours
     });
-    console.log('token', token);
 
     res.status(200).send({
       id: user._id,
