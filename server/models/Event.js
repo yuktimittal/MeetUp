@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
+const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
   name: {
@@ -20,7 +20,7 @@ const EventSchema = new Schema({
     type: String,
   },
   eventDuration: {
-    type: Decimal,
+    type: String,
   },
   eventMode: {
     type: String, // options - (online, offline, hybrid)
