@@ -1,14 +1,14 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const interestSchema = mongoose.Schema({
   event: {
     type: Schema.Types.ObjectId,
-    ref: "Event",
+    ref: 'Event',
   },
   user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
   },
   createdOn: {
     type: Date,
@@ -16,4 +16,4 @@ const interestSchema = mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Interest", InterestSchema);
+module.exports = mongoose.model('Interest', InterestSchema);
