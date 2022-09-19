@@ -57,9 +57,10 @@ router.route('/update/:id').put(async (req, res) => {
       };
 
       const updateEvent = await Event.updateOne({ _id: req.params.id }, event1);
+      res.send('Event updated successfully');
     }
   } catch (err) {
-    console.log(err);
+    res.send({ error: err });
   }
 });
 
