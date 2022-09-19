@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -33,7 +33,7 @@ const UserSchema = new Schema({
   },
   preferences: {
     type: Schema.Types.ObjectId,
-    ref: "Category",
+    ref: 'Category',
   },
   createdAt: {
     type: Date,
@@ -41,4 +41,4 @@ const UserSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema);
