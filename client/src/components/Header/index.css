@@ -1,3 +1,15 @@
 .Profile{
     margin-left: 3rem !important;
 }
+.app-logo-link, .app-logo-link:visited, .app-logo-link:active, .app-logo-link:hover {
+    text-decoration: none;
+    color: black;
+}
+.header-menu-link, .header-menu-link:visited, .header-menu-link:active, .header-menu-link:hover {
+    text-decoration: none;
+    color: black;
+}
+.header-menu-margin{
+    margin-left: 1rem;
+}
+
