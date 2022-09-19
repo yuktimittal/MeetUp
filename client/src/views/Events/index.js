@@ -4,11 +4,12 @@ import './index.css';
 import Grid from '@mui/material/Grid';
 import { WELCOME_MSG, WELCOME_TEXT } from './constants';
 import axios from 'axios';
+import { authHeader } from 'login/services';
 
 const Events = () => {
   const getUsers = async () => {
     await axios
-      .get('/user')
+      .get('/user', { headers: authHeader() })
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err));
   };
