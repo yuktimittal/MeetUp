@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const registrationSchema = mongoose.Schema({
+const RegistrationSchema = mongoose.Schema({
   event: {
     type: Schema.Types.ObjectId,
     ref: 'Event',

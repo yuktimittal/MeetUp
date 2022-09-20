@@ -4,17 +4,18 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   contact: {
     type: Number,
-    required: true,
-    unique: true,
   },
   gender: {
     type: String, //Option field
@@ -32,7 +33,7 @@ const UserSchema = new Schema({
     type: String, //rethink this
   },
   preferences: {
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId], //there can be multiple
     ref: 'Category',
   },
   createdAt: {
