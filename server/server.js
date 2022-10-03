@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', require('./routes/user/users.routes'));
 app.use('/auth', require('./routes/user/auth.routes'));
+app.use('/event', require('./routes/event/events'));
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
