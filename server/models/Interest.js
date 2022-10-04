@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const interestSchema = mongoose.Schema({
+const InterestSchema = mongoose.Schema({
   event: {
     type: Schema.Types.ObjectId,
     ref: 'Event',
