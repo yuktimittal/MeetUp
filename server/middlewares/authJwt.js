@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
-const config = require('../config/auth.config.js');
-const User = require('../models/User');
+import jwt from 'jsonwebtoken';
+import config from '../config/auth.config.js';
 
-verifyToken = (req, res, next) => {
+const verifyToken = (req, res, next) => {
   let token = req.headers['x-access-token'];
   if (!token) {
     return res.status(403).send({ message: 'No token provided!' });
@@ -19,4 +18,4 @@ verifyToken = (req, res, next) => {
 const authJwt = {
   verifyToken,
 };
-module.exports = authJwt;
+export default authJwt;

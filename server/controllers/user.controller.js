@@ -1,12 +1,12 @@
-const User = require('../models/User');
+import User from '../models/User.js';
 
-exports.getAllUsers = (req, res) => {
+export const getAllUsers = (req, res) => {
   User.find()
     .then((users) => res.json(users))
     .catch((err) => res.status(400).json('Error: ', err));
 };
 
-exports.getUserById = (req, res) => {
+export const getUserById = (req, res) => {
   User.findById(req.params.id)
     .then((user) => {
       console.log('mai idhar');
@@ -21,7 +21,7 @@ exports.getUserById = (req, res) => {
     );
 };
 
-exports.updateUserById = (req, res) => {
+export const updateUserById = (req, res) => {
   User.findOneAndUpdate(
     { _id: req.params.id },
     { $set: { ...req.body } },
@@ -35,7 +35,7 @@ exports.updateUserById = (req, res) => {
   );
 };
 
-exports.delteUserById = (req, res) => {
+export const delteUserById = (req, res) => {
   User.findByIdAndRemove(req.params.id, (err, result) => {
     if (err) {
       res.status(400).json('Error: ', err);
@@ -44,7 +44,7 @@ exports.delteUserById = (req, res) => {
   });
 };
 
-exports.addNewUser = (req, res) => {
+export const addNewUser = (req, res) => {
   const new_user = {
     name: req.body.name,
     email: req.body.email,

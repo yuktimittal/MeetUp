@@ -1,9 +1,9 @@
-const config = require('../config/auth.config');
-const User = require('../models/User');
-var jwt = require('jsonwebtoken');
-var bcrypt = require('bcryptjs');
+import config from '../config/auth.config.js';
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
-exports.signup = (req, res) => {
+export const signup = (req, res) => {
   const user = new User({
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
@@ -24,7 +24,7 @@ exports.signup = (req, res) => {
   });
 };
 
-exports.signin = (req, res) => {
+export const signin = (req, res) => {
   User.findOne({
     email: req.body.email,
   }).exec((err, user) => {
