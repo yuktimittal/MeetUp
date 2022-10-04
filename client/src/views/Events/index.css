@@ -1,0 +1,30 @@
+.home-page{
+    margin-top: 3rem;
+}
+.bg-image{    
+    background-image: url("assets/images/main.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 35rem;
+    width: 100%;
+}
+.welcome-text{
+    padding-top: 2rem;
+    padding-left: 2rem;
+    font-size: 1.5rem;
+}
+.welcome-text1{
+    margin-top: 0;
+    padding-left: 2rem;
+    font-size: 2rem;
+    width:30rem;
+    flex-wrap: wrap;
+
+}
+.event-card-header.css-185gdzj-MuiCardHeader-root {
+    background-color: var(--event-card-header);
+    
+}
+.event-cards.MuiGrid-root.MuiGrid-container{
+    margin-top: -5rem;
+}

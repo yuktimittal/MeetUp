@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { teal } from '@mui/material/colors';
+import Header from './components/Header';
+import AppRoutes from 'config/Routes';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: teal[300],
+      },
+      secondary: {
+        main: '#f44336',
+      },
+    },
+  });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hi Pichu
-        </p>
-        <a
-          className="App-link"
-          href="https://www.pokemon.com/us/pokedex/pichu"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Pika pika
-        </a>
-      </header>
-    </div>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Header />
+        <AppRoutes />
+      </ThemeProvider>
+    </Router>
   );
 }
 

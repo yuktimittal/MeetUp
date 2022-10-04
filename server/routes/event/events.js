@@ -1,8 +1,7 @@
-const router = require('express').Router();
-const mongoose = require('mongoose');
+import { Router } from 'express';
+import Event from '../../models/Event.js';
 
-require('../../models/Event');
-const Event = mongoose.model('Event');
+const router = Router();
 
 // API to get all the events
 router.route('/').get((req, res) => {
@@ -78,4 +77,4 @@ router.route('/delete/:id').delete(async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
