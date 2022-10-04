@@ -1,7 +1,7 @@
-const { verifySignUp } = require('../../middlewares');
-const { signin, signup } = require('../../controllers');
-
-const router = require('express').Router();
+import verifySignUp from '../../middlewares/verifySignUp.js';
+import { signin, signup } from '../../controllers/auth.controller.js';
+import { Router } from 'express';
+const router = Router();
 
 router.use(function (req, res, next) {
   res.header(
@@ -13,4 +13,4 @@ router.use(function (req, res, next) {
 router.post('/signup', [verifySignUp.checkDuplicateEmail], signup);
 router.post('/signin', signin);
 
-module.exports = router;
+export default router;

@@ -1,6 +1,6 @@
-const User = require('../models/User');
+import User from '../models/User.js';
 
-checkDuplicateEmail = (req, res, next) => {
+const checkDuplicateEmail = (req, res, next) => {
   User.findOne({
     email: req.body.email,
   }).exec((err, user) => {
@@ -19,4 +19,4 @@ checkDuplicateEmail = (req, res, next) => {
 const verifySignUp = {
   checkDuplicateEmail,
 };
-module.exports = verifySignUp;
+export default verifySignUp;

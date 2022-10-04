@@ -1,11 +1,13 @@
-const router = require('express').Router();
-const { authJwt } = require('../../middlewares');
-const bodyParser = require('body-parser');
-const {
+import { Router } from 'express';
+import authJwt from '../../middlewares/authJwt.js';
+import bodyParser from 'body-parser';
+import {
   getAllUsers,
   getUserById,
   updateUserById,
-} = require('../../controllers');
+} from '../../controllers/user.controller.js';
+
+const router = Router();
 
 router.use(bodyParser.json());
 
@@ -18,4 +20,4 @@ router.get('/getById/:id', [authJwt.verifyToken], getUserById);
 //API to update the user
 router.patch('/update/:id', [authJwt.verifyToken], updateUserById);
 
-module.exports = router;
+export default router;
