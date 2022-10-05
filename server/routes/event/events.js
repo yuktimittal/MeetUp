@@ -13,6 +13,12 @@ router.route('/').get((req, res) => {
 // API to get a event based on the Id
 router.route('/:id').get((req, res) => {
   Event.findById(req.params.id)
+    .populate({
+      path: 'registrations',
+      model: 'registration',
+      populate: { path: 'user', model: 'user', select: 'email-_id' },
+      select: 'user',
+    })
     .then((event) => res.json(event))
     .catch((err) => res.status(400).json('Error: ', err));
 });

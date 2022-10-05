@@ -3,6 +3,7 @@ import db from './config/db.js';
 import userRoutes from './routes/user/users.routes.js';
 import authRoutes from './routes/user/auth.routes.js';
 import eventRoutes from './routes/event/events.js';
+import registrationRoutes from './routes/registration/registration.routes.js';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/event', eventRoutes);
+app.use('/register', registrationRoutes);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {

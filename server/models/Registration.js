@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const RegistrationSchema = mongoose.Schema({
-  event: {
-    type: Schema.Types.ObjectId,
-    ref: 'Event',
+const RegistrationSchema = new Schema(
+  {
+    event: {
+      type: Schema.Types.ObjectId,
+      ref: 'event',
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  createdOn: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Registration', RegistrationSchema);
+const Registration = mongoose.model('registration', RegistrationSchema);
+export default Registration;
