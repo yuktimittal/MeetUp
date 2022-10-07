@@ -74,7 +74,7 @@ router.route('/delete/:id').delete(async (req, res) => {
         .catch((err) => res.status(400).json('Error: ', err));
     }
   } catch (err) {
-    console.log(err);
+    res.send({ error: err });
   }
 });
 
