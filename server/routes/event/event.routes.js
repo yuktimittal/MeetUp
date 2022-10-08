@@ -4,7 +4,7 @@ import {
   getAllEvents,
   geteventById,
   updateEventById,
-  delteEventById,
+  deleteEventById,
   addNewEvent,
 } from '../../controllers/event.controller.js';
 import authJwt from '../../middlewares/authJwt.js';
@@ -16,6 +16,6 @@ router.post('/', [authJwt.verifyToken], addNewEvent);
 router.get('/', [authJwt.verifyToken], getAllEvents);
 router.get('/getById/:id', [authJwt.verifyToken], geteventById);
 router.patch('/update/:id', [authJwt.verifyToken], updateEventById);
-router.delete('/delete/:id', [authJwt.verifyToken], delteEventById);
+router.delete('/delete/:id', [authJwt.verifyToken], deleteEventById);
 
 export default router;
