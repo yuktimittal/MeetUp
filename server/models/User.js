@@ -43,6 +43,12 @@ const UserSchema = new Schema(
         ref: 'registration',
       },
     ],
+    interests: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'interest',
+      },
+    ],
   },
   { timestamps: true }
 );
