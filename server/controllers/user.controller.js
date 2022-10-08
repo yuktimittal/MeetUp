@@ -18,6 +18,12 @@ export const getUserById = (req, res) => {
       populate: { path: 'event', model: 'event', select: 'name-_id' },
       select: 'event',
     })
+    .populate({
+      path: 'interests',
+      model: 'interest',
+      populate: { path: 'event', model: 'event', select: 'name-_id' },
+      select: 'event',
+    })
     .then((user) => {
       if (user) {
         res.status(200).json(user);

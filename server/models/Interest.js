@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
-const InterestSchema = mongoose.Schema({
-  event: {
-    type: Schema.Types.ObjectId,
-    ref: 'Event',
+const InterestSchema = new Schema(
+  {
+    event: {
+      type: Schema.Types.ObjectId,
+      ref: 'event',
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  createdOn: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Interest', InterestSchema);
+const Interest = mongoose.model('interest', InterestSchema);
+export default Interest;

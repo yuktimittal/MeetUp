@@ -4,6 +4,7 @@ import userRoutes from './routes/user/users.routes.js';
 import authRoutes from './routes/user/auth.routes.js';
 import eventRoutes from './routes/event/events.js';
 import registrationRoutes from './routes/registration/registration.routes.js';
+import interestRoutes from './routes/interest/interest.routes.js';
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/event', eventRoutes);
 app.use('/register', registrationRoutes);
+app.use('/interest', interestRoutes);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => {
