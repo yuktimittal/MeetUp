@@ -50,7 +50,7 @@ export const updateEventById = (req, res) => {
   );
 };
 
-export const delteEventById = (req, res) => {
+export const deleteEventById = (req, res) => {
   Event.findByIdAndRemove(req.params.id, (err, result) => {
     if (err) {
       res.status(400).json('Error: ', err);
