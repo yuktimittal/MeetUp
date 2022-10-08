@@ -2,7 +2,7 @@ import express from 'express';
 import db from './config/db.js';
 import userRoutes from './routes/user/users.routes.js';
 import authRoutes from './routes/user/auth.routes.js';
-import eventRoutes from './routes/event/events.js';
+import eventRoutes from './routes/event/event.routes.js';
 import registrationRoutes from './routes/registration/registration.routes.js';
 import interestRoutes from './routes/interest/interest.routes.js';
 

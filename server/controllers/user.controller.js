@@ -50,7 +50,7 @@ export const updateUserById = (req, res) => {
   );
 };
 
-export const delteUserById = (req, res) => {
+export const deleteUserById = (req, res) => {
   User.findByIdAndRemove(req.params.id, (err, result) => {
     if (err) {
       res.status(400).json('Error: ', err);
