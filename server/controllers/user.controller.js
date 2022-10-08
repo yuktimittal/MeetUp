@@ -1,15 +1,24 @@
 import User from '../models/User.js';
 
-export const getAllUsers = (req, res) => {
-  User.find()
-    .then((users) => res.json(users))
-    .catch((err) => res.status(400).json('Error: ', err));
+export const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find().populate('registrations');
+    return res.status(200).send(users);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ Error: err });
+  }
 };
 
 export const getUserById = (req, res) => {
   User.findById(req.params.id)
+    .populate({
+      path: 'registrations',
+      model: 'registration',
+      populate: { path: 'event', model: 'event', select: 'name-_id' },
+      select: 'event',
+    })
     .then((user) => {
-      console.log('mai idhar');
       if (user) {
         res.status(200).json(user);
       } else {
