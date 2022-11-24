@@ -13,6 +13,9 @@ function App() {
       secondary: {
         main: '#f44336',
       },
+      buttons: {
+        main: '#799496',
+      },
     },
   });
   return (
