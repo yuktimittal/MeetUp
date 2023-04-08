@@ -3,6 +3,7 @@ import { teal } from '@mui/material/colors';
 import Header from './components/Header';
 import AppRoutes from 'config/Routes';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { AppContextProvider } from 'context/AppContext';
 
 function App() {
   const theme = createTheme({
@@ -20,10 +21,12 @@ function App() {
   });
   return (
     <Router>
-      <ThemeProvider theme={theme}>
-        <Header />
-        <AppRoutes />
-      </ThemeProvider>
+      <AppContextProvider>
+        <ThemeProvider theme={theme}>
+          <Header />
+          <AppRoutes />
+        </ThemeProvider>
+      </AppContextProvider>
     </Router>
   );
 }
