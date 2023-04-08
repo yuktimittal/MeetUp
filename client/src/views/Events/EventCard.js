@@ -7,9 +7,11 @@ import {
   CardActions,
   IconButton,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import picture from 'assets/images/bg.jpg';
 
 const EventCard = ({ eventTitle, date, eventDescription }) => {
@@ -26,13 +28,29 @@ const EventCard = ({ eventTitle, date, eventDescription }) => {
           {eventDescription}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+      <CardActions
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          paddingTop: '0rem',
+          marginTop: '-0.5rem',
+        }}
+      >
+        <div>
+          <Tooltip id="button-report" title="Register">
+            <IconButton aria-label="register" size="large">
+              <HowToRegIcon />
+            </IconButton>
+          </Tooltip>
+          <IconButton aria-label="share" size="large">
+            <ShareIcon />
+          </IconButton>
+        </div>
+        <div>
+          <IconButton aria-label="add to favorites" size="large">
+            <FavoriteIcon />
+          </IconButton>
+        </div>
       </CardActions>
     </Card>
   );
