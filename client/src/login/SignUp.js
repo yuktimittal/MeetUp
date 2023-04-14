@@ -8,16 +8,29 @@ import {
   IconButton,
   Button,
   Alert,
-  //   Snackbar,
+  Typography,
+  Snackbar,
 } from '@mui/material';
 import { useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
+import drinks from 'assets/images/drinks_green.svg';
+import {
+  CREATE_ACCOUNT_TEXT,
+  REGISTRATION_SUCCESS_MSG,
+  USER,
+  SIGN_UP,
+  SIGNUP_INPUT_LABELS,
+  SIGNUP_KEYS,
+} from './constants';
+import { APP_NAME_MULAKAAT } from 'constants';
+import './index.css';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userDetails, setUserDetails] = useState({
+    name: null,
     email: null,
     password: null,
   });
@@ -25,7 +38,6 @@ const SignUp = () => {
     successful: false,
     message: null,
   });
-  console.log(isSignedUp);
   const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (value, field) => {
@@ -37,16 +49,15 @@ const SignUp = () => {
   };
 
   const handleSignUp = async () => {
-    console.log(userDetails);
     await axios
       .post('/auth/signup', userDetails)
       .then((res) => {
         setIsSignedUp({
           successful: true,
-          message: 'User registered successully',
+          message: REGISTRATION_SUCCESS_MSG,
         });
         if (res.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(res.data));
+          localStorage.setItem(USER, JSON.stringify(res.data));
         }
       })
       .catch((err) => {
@@ -61,44 +72,66 @@ const SignUp = () => {
     setUserDetails({ email: null, password: null });
   };
 
-  const AlertMessage = () => {
-    return (
-      <Alert
-        severity={isSignedUp.successful ? 'success' : 'error '}
-        // severity="error"
-      >
-        {isSignedUp.message}
-      </Alert>
-    );
-  };
-
   return (
     <>
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={3000}
+        onClose={() => setShowAlert(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        sx={{ mt: 8 }}
+      >
+        <Alert
+          onClose={() => setShowAlert(false)}
+          severity={isSignedUp?.successful ? 'success' : 'error'}
+        >
+          {isSignedUp?.message}
+        </Alert>
+      </Snackbar>
+      <Box component="form" className="signup-form-input-box">
+        <Box className="signup-app-logo-text" noValidate autoComplete="off">
+          <img className="login-app-logo-image" src={drinks} alt="app-logo" />
+
+          <Typography
+            variant="h4"
+            component="div"
+            color="primary"
+            className="login-logo-name"
+          >
+            {APP_NAME_MULAKAAT}
+          </Typography>
+        </Box>
+        <Box className="signup-welcome-text">{CREATE_ACCOUNT_TEXT}</Box>
+      </Box>
+
       <Box
-        style={{ marginTop: '10rem' }}
         component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
+        className="signup-form-input-box"
         noValidate
         autoComplete="off"
       >
         <TextField
-          label="email"
+          label={SIGNUP_INPUT_LABELS.NAME}
+          className="signp-text-fields"
+          value={userDetails?.name}
+          onChange={(e) => handleChange(e.target.value, SIGNUP_KEYS.NAME)}
+        />
+        <TextField
+          label={SIGNUP_INPUT_LABELS.EMAIL}
+          className="signp-text-fields"
           value={userDetails?.email}
-          onChange={(e) => handleChange(e.target.value, 'email')}
+          onChange={(e) => handleChange(e.target.value, SIGNUP_KEYS.EMAIL)}
         />
 
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+        <FormControl className="signp-text-fields" variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">
-            Password
+            {SIGNUP_INPUT_LABELS.PASSWORD}
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? 'text' : 'password'}
             value={userDetails?.password}
-            //   value={userDetails.password}
-            onChange={(e) => handleChange(e.target.value, 'password')}
+            onChange={(e) => handleChange(e.target.value, SIGNUP_KEYS.PASSWORD)}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -110,14 +143,17 @@ const SignUp = () => {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label={SIGNUP_INPUT_LABELS.PASSWORD}
           />
         </FormControl>
+        <Button
+          className="signup-btn"
+          onClick={handleSignUp}
+          variant="contained"
+        >
+          {SIGN_UP}
+        </Button>
       </Box>
-      <Button onClick={handleSignUp} variant="text">
-        Sign Up
-      </Button>
-      {showAlert && <AlertMessage />}
     </>
   );
 };

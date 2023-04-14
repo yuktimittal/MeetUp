@@ -1,0 +1,59 @@
+.login-app-logo{
+    margin-top: 13rem;
+    margin-left: 1.8rem;
+    display: flex;
+}
+.login-app-logo-image{
+    width: 3rem;
+}
+
+.login-logo-name{
+    margin-top: 0.5rem !important;
+    margin-left: 0.6rem !important;
+    
+}
+.login-welcome-text{
+    margin-top: 1rem;
+    margin-left: 2rem;
+}
+
+.login-form{
+    width: 28rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-form-inputs{
+    margin: 2rem;      
+}
+.login-form-input-field{
+    margin-top: 0.5rem !important;      
+}
+.login-btn{
+    margin-top: 0.8rem !important;
+    width: 100%;
+}
+.signup-btn{
+    width: 55ch;
+}
+.signup-form-input-box{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.signp-text-fields{
+    width: 50ch !important;
+    margin-bottom: 1rem !important;
+}
+
+.signup-welcome-text{
+    margin-top: 1rem;
+    margin-left: 0rem;
+}
+.signup-app-logo-text{
+    margin-top: 5rem;
+    margin-left: 4;
+    display: flex;
+    align-items: center;
+}

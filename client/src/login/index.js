@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   TextField,
   Box,
@@ -8,14 +9,29 @@ import {
   IconButton,
   Button,
   Alert,
-  //   Snackbar,
+  Grid,
+  CssBaseline,
+  Paper,
+  Typography,
+  Snackbar,
 } from '@mui/material';
-import { useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-// import { getLoggedInUser } from './services';
+import './index.css';
+import { Link, Navigate } from 'react-router-dom';
+import drinks from 'assets/images/drinks_green.svg';
+import {
+  DONT_HAVE_ACCOUNT,
+  REGISTER,
+  LOGIN,
+  WELCOME_BACK_TEXT,
+  LOGIN_INPUT_LABELS,
+  LOGIN_KEYS,
+  LOGIN_SUCCESS_MSG,
+  USER,
+} from './constants';
+import { APP_NAME_MULAKAAT } from 'constants';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +43,6 @@ const Login = () => {
     successful: false,
     message: null,
   });
-  console.log(isSignedUp);
   const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (value, field) => {
@@ -38,28 +53,19 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
-  // const navigateToEvents = () => {
-  //   const user = getLoggedInUser();
-  //   if (user) {
-  //     useNavigate('./events', { replace: true });
-  //   }
-  // };
-
   const handleSignUp = async () => {
     await axios
       .post('/auth/signin', userDetails)
       .then((res) => {
         setIsSignedUp({
           successful: true,
-          message: 'successfully logged in',
+          message: LOGIN_SUCCESS_MSG,
         });
         if (res.data.accessToken) {
-          localStorage.setItem('user', JSON.stringify(res.data));
-          // navigateToEvents();
+          localStorage.setItem(USER, JSON.stringify(res.data));
         }
       })
       .catch((err) => {
-        console.log(err);
         setIsSignedUp({
           successful: false,
           message: err?.response?.data?.message,
@@ -70,63 +76,128 @@ const Login = () => {
     setUserDetails({ email: null, password: null });
   };
 
-  const AlertMessage = () => {
-    return (
-      <Alert severity={isSignedUp.successful ? 'success' : 'error'}>
-        {isSignedUp.message}
-      </Alert>
-    );
-  };
+  if (isSignedUp?.successful) {
+    return <Navigate to="/events" />;
+  }
 
   return (
     <>
-      <Box
-        style={{ marginTop: '10rem' }}
-        component="form"
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={3000}
+        onClose={() => setShowAlert(false)}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        sx={{ mt: 8 }}
       >
-        <TextField
-          label="email"
-          value={userDetails?.email}
-          onChange={(e) => handleChange(e.target.value, 'email')}
+        <Alert
+          onClose={() => setShowAlert(false)}
+          severity={isSignedUp?.successful ? 'success' : 'error'}
+        >
+          {isSignedUp?.message}
+        </Alert>
+      </Snackbar>
+      <Grid container component="main" sx={{ height: '100vh' }}>
+        <CssBaseline />
+
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
         />
 
-        <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-          <InputLabel htmlFor="outlined-adornment-password">
-            Password
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-password"
-            type={showPassword ? 'text' : 'password'}
-            value={userDetails?.password}
-            //   value={userDetails.password}
-            onChange={(e) => handleChange(e.target.value, 'password')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-            label="Password"
-          />
-        </FormControl>
-      </Box>
-      <Button onClick={handleSignUp} variant="text">
-        Login
-      </Button>
-      <div>
-        Don't have an account? <Link to="/signUp">Register</Link>
-      </div>
-      {showAlert && <AlertMessage />}
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={6}
+          square
+          sx={{ pl: 10 }}
+        >
+          <Box
+            component="form"
+            className="login-app-logo"
+            noValidate
+            autoComplete="off"
+          >
+            <img className="login-app-logo-image" src={drinks} alt="app-logo" />
+
+            <Typography
+              variant="h4"
+              component="div"
+              color="primary"
+              className="login-logo-name"
+            >
+              {APP_NAME_MULAKAAT}
+            </Typography>
+          </Box>
+          <Box className="login-welcome-text">{WELCOME_BACK_TEXT}</Box>
+          <Box
+            component="form"
+            className="login-form"
+            noValidate
+            autoComplete="off"
+          >
+            <Box className="login-form-inputs">
+              <TextField
+                label={LOGIN_INPUT_LABELS.EMAIL}
+                fullWidth
+                value={userDetails?.email}
+                onChange={(e) => handleChange(e.target.value, LOGIN_KEYS.EMAIL)}
+              />
+
+              <FormControl
+                fullWidth
+                className="login-form-input-field"
+                variant="outlined"
+              >
+                <InputLabel htmlFor="outlined-adornment-password">
+                  {LOGIN_INPUT_LABELS.PASSWORD}
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-password"
+                  type={showPassword ? 'text' : 'password'}
+                  value={userDetails?.password}
+                  onChange={(e) =>
+                    handleChange(e.target.value, LOGIN_KEYS.PASSWORD)
+                  }
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                  label="Password"
+                />
+              </FormControl>
+              <Button
+                onClick={handleSignUp}
+                className="login-btn"
+                variant="contained"
+              >
+                {LOGIN}
+              </Button>
+            </Box>
+
+            <div>
+              {DONT_HAVE_ACCOUNT} <Link to="/signUp">{REGISTER}</Link>
+            </div>
+          </Box>
+        </Grid>
+      </Grid>
     </>
   );
 };
