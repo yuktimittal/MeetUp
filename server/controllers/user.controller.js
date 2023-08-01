@@ -2,7 +2,18 @@ import User from '../models/User.js';
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().populate('registrations');
+    const keyword = req.query.search
+      ? {
+          $or: [
+            { name: { $regex: req.query.search, $options: 'i' } },
+            { email: { $regex: req.query.search, $options: 'i' } },
+          ],
+        }
+      : {};
+    console.log('req', req);
+    const users = await User.find(keyword)
+      .find({ _id: { $ne: req.userId } })
+      .populate('registrations');
     return res.status(200).send(users);
   } catch (err) {
     console.log(err);
