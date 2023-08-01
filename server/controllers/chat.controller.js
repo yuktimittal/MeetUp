@@ -48,3 +48,24 @@ export const accessChat = asyncHandler(async (req, res) => {
     }
   }
 });
+
+export const fetchChats = asyncHandler(async (req, res) => {
+  try {
+    Chat.find({
+      users: { $elemMatch: { $eq: req.userId } },
+    })
+      .populate('users', '-password')
+      .populate('groupAdmin', '-password')
+      .populate('latestMessage')
+      .sort({ updatedAt: -1 })
+      .then(async (results) => {
+        results = await User.populate(results, {
+          path: 'latestMessage.sender',
+          select: 'name email',
+        });
+        res.send(results);
+      });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
