@@ -69,3 +69,30 @@ export const fetchChats = asyncHandler(async (req, res) => {
     throw new Error(error.message);
   }
 });
+
+export const createGroupChat = asyncHandler(async (req, res) => {
+  const { userIds, name } = req.body;
+
+  if (!userIds || name) {
+    console.log('UserIds and name are not provided');
+    return res.status(400).send('Please fill all the details');
+  }
+  var chatData = {
+    name: name,
+    isGroupChat: true,
+    users: [req.userId, ...userIds],
+    groupAdmin: [req.userId],
+  };
+  try {
+    const createdChat = await Chat.create(chatData);
+    const FullChat = await Chat.findOne({
+      _id: createdChat._id,
+    })
+      .populate('users', '-password')
+      .populate('groupAdmin', '-password');
+
+    res.status(200).send(FullChat);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+});
