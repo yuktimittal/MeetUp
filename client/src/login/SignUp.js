@@ -5,6 +5,7 @@ import {
   InputLabel,
   OutlinedInput,
   InputAdornment,
+  Input,
   IconButton,
   Button,
   Alert,
@@ -33,7 +34,9 @@ const SignUp = () => {
     name: null,
     email: null,
     password: null,
+    profilePic: null,
   });
+  const [loading, setLoading] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState({
     successful: false,
     message: null,
@@ -70,6 +73,40 @@ const SignUp = () => {
     setShowAlert(true);
 
     setUserDetails({ email: null, password: null });
+  };
+
+  const uploadPic = (pic) => {
+    setLoading(true);
+    if (pic === undefined) {
+      console.log('Please select an image');
+      return;
+    }
+    if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
+      const data = new FormData();
+      data.append('file', pic);
+      data.append('upload_preset', 'meet-up');
+      data.append('cloud_name', 'dn02dvrtg');
+
+      console.log('data', data);
+      fetch('https://api.cloudinary.com/v1_1/dn02dvrtg/image/upload', {
+        method: 'post',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log('ddd', data);
+          setUserDetails({ ...userDetails, profilePic: data.url.toString() });
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      console.log('select an image');
+      setLoading(false);
+      return;
+    }
   };
 
   return (
@@ -146,10 +183,24 @@ const SignUp = () => {
             label={SIGNUP_INPUT_LABELS.PASSWORD}
           />
         </FormControl>
+        <InputLabel className="signp-text-fields">
+          {'Upload your picture'}
+        </InputLabel>
+        <FormControl className="signp-text-fields">
+          <Input
+            placeholder="Upload your picture"
+            name="picture"
+            type="file"
+            accept="image/*"
+            p={1.5}
+            onChange={(e) => uploadPic(e.target.files[0])}
+          />
+        </FormControl>
         <Button
           className="signup-btn"
           onClick={handleSignUp}
           variant="contained"
+          disabled={loading}
         >
           {SIGN_UP}
         </Button>
