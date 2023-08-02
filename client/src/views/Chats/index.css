@@ -1,0 +1,21 @@
+.chat-screen{
+    margin-top: 5rem;
+    height: 100%;
+}
+.chatSection{
+    width: 100%
+}
+
+.borderRight500{
+    border-right: 1px #e0e0e0;
+}
+
+.messageArea {
+    height: 75vh;
+    overflow-y: auto;
+}
+
+.chatlistArea{
+    height: 75vh;
+    overflow-y: auto;
+}

@@ -15,6 +15,7 @@ import {
   Avatar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import './index.css';
 import { Link } from 'react-router-dom';
 import { Menu } from 'config/Routes/Menu.js';
@@ -105,6 +106,9 @@ const Header = (props) => {
                 {item.name}
               </Link>
             ))}
+            <Link to={'/chats'}>
+              <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
+            </Link>
 
             <IconButton
               className="Profile"
