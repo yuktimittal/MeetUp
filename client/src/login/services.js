@@ -14,8 +14,10 @@ export const authHeader = () => {
   }
 };
 
-export const signOut = () => {
+export const signOut = (setUser, navigate) => {
   localStorage.removeItem('user');
+  setUser({});
+  navigate('/');
 };
 
 export const signUp = (userDetails) => {

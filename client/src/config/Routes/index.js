@@ -8,9 +8,9 @@ import Events from 'views/Events';
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Events />} exact />
+      <Route path="/events" element={<Events />} exact />
       <Route path="/signUp" element={<SignUp />} exact />
-      <Route path="/login" element={<Login />} exact />
+      <Route path="/" element={<Login />} exact />
       <Route path="/events" element={<Events />} exact />
       <Route path="/groups" element={<Login />} exact />
       <Route path="/chats" element={<Chat />} exact />

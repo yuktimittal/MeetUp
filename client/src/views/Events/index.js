@@ -5,9 +5,20 @@ import './index.css';
 import Grid from '@mui/material/Grid';
 import { WELCOME_MSG, WELCOME_TEXT } from './constants';
 import EventServices from 'services/EventServices.js';
+import { useNavigate } from 'react-router-dom';
 
 const Events = () => {
   const [eventsList, setEventsList] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('user'));
+
+    if (userInfo) {
+      navigate('/events');
+    }
+  }, [navigate]);
+
   useEffect(() => {
     EventServices(setEventsList);
   }, []);

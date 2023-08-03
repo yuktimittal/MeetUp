@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import drinks from 'assets/images/drinks.svg';
 import {
   AppBar,
@@ -20,6 +20,7 @@ import './index.css';
 import { Link } from 'react-router-dom';
 import { Menu } from 'config/Routes/Menu.js';
 import ProfileDropdown from './ProfileDropdown';
+import { AppContext } from 'context/AppContext';
 
 const drawerWidth = 240;
 
@@ -30,6 +31,8 @@ const Header = (props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const { user } = useContext(AppContext);
+
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -96,29 +99,40 @@ const Header = (props) => {
             </Link>
           </Typography>
 
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {Menu.map((item) => (
-              <Link
-                key={item.name}
-                className="header-menu-link header-menu-margin"
-                to={item.path}
-              >
-                {item.name}
+          {user && user?.email ? (
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {Menu.map((item) => (
+                <Link
+                  key={item.name}
+                  className="header-menu-link header-menu-margin"
+                  to={item.path}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Link to={'/chats'}>
+                <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
               </Link>
-            ))}
-            <Link to={'/chats'}>
-              <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
-            </Link>
 
-            <IconButton
-              className="Profile"
-              onClick={handleClick}
-              sx={{ p: 0 }}
-              aria-expanded={true}
-            >
-              <Avatar>Y</Avatar>
-            </IconButton>
-          </Box>
+              <IconButton
+                className="Profile"
+                onClick={handleClick}
+                sx={{ p: 0 }}
+                aria-expanded={true}
+              >
+                <Avatar>Y</Avatar>
+              </IconButton>
+            </Box>
+          ) : (
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <Link
+                className="header-menu-link header-menu-margin"
+                to={'/login'}
+              >
+                Login
+              </Link>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
       <Box component="nav">

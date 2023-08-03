@@ -1,10 +1,14 @@
 import { Menu, MenuItem, ListItemIcon } from '@mui/material';
 import { Logout } from '@mui/icons-material';
 import { getLoggedInUser, signOut } from 'login/services';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from 'context/AppContext';
 
 const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
   const user = getLoggedInUser();
+  const { setUser } = useContext(AppContext);
+  const navigate = useNavigate();
 
   return (
     <Menu
@@ -45,7 +49,7 @@ const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
         <>
           <MenuItem>View Profile</MenuItem>
 
-          <MenuItem onClick={signOut}>
+          <MenuItem onClick={() => signOut(setUser, navigate)}>
             <ListItemIcon>
               <Logout fontSize="small" />
             </ListItemIcon>
@@ -53,7 +57,7 @@ const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
           </MenuItem>
         </>
       ) : (
-        <Link to="/Login" style={{ textDecoration: 'none', color: '#000' }}>
+        <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
           <MenuItem>Log In</MenuItem>
         </Link>
       )}
