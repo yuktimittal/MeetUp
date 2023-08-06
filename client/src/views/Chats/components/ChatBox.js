@@ -1,8 +1,21 @@
 import React from 'react';
 import { ListItem, Avatar, ListItemIcon, ListItemText } from '@mui/material';
-const ChatBox = ({ username, online = false, profilePic }) => {
+const ChatBox = ({
+  onClick,
+  username,
+  online = false,
+  selected = false, // Boolean to indicate if chat is selected or not
+  latestMessage,
+  profilePic,
+}) => {
+  console.log('sel', selected);
   return (
-    <ListItem button key={username}>
+    <ListItem
+      onClick={onClick}
+      button
+      key={username}
+      className={selected && 'selected-chat-box-item'}
+    >
       <ListItemIcon>
         <Avatar alt="Remy Sharp" src={profilePic} />
       </ListItemIcon>
@@ -11,6 +24,7 @@ const ChatBox = ({ username, online = false, profilePic }) => {
         secondary={online ? 'online' : null}
         align="right"
       ></ListItemText>
+      <ListItemText align="bottom">{latestMessage}</ListItemText>
     </ListItem>
   );
 };

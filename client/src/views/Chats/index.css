@@ -19,3 +19,10 @@
     height: 75vh;
     overflow-y: auto;
 }
+.chat-box{
+    border: 1rem solid red !important;
+}
+.selected-chat-box-item{
+    background-color: #5B9A8B !important;
+ 
+}
