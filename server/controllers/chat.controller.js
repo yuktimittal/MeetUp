@@ -73,7 +73,7 @@ export const fetchChats = asyncHandler(async (req, res) => {
 export const createGroupChat = asyncHandler(async (req, res) => {
   const { userIds, name } = req.body;
 
-  if (!userIds || name) {
+  if (!userIds || !name) {
     console.log('UserIds and name are not provided');
     return res.status(400).send('Please fill all the details');
   }
