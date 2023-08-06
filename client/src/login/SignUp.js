@@ -87,14 +87,12 @@ const SignUp = () => {
       data.append('upload_preset', 'meet-up');
       data.append('cloud_name', 'dn02dvrtg');
 
-      console.log('data', data);
       fetch('https://api.cloudinary.com/v1_1/dn02dvrtg/image/upload', {
         method: 'post',
         body: data,
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log('ddd', data);
           setUserDetails({ ...userDetails, profilePic: data.url.toString() });
           setLoading(false);
         })
