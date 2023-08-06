@@ -6,6 +6,7 @@ import eventRoutes from './routes/event/event.routes.js';
 import registrationRoutes from './routes/registration/registration.routes.js';
 import interestRoutes from './routes/interest/interest.routes.js';
 import chatRoutes from './routes/chat/chat.routes.js';
+import messageRoutes from './routes/message/message.route.js';
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js';
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/event', eventRoutes);
 app.use('/register', registrationRoutes);
 app.use('/interest', interestRoutes);
 app.use('/chat', chatRoutes);
+app.use('/message', messageRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
