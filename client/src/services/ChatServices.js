@@ -19,6 +19,7 @@ export const CreateOrAccessChat = async (
   await axios
     .post('/chat', { userId: userId }, { headers: authHeader() })
     .then((res) => {
+      console.log('setting selected chat inside access chat', res.data?._id);
       setSelectedChat(res.data?._id);
       if (!chatList.find((c) => c._id === res.data._id)) {
         setChatList(res.data, ...chatList);
@@ -48,4 +49,28 @@ export const CreateGroup = async (
       console.log('Error while creating group chat', err);
       setOpenCreateGroupChat(false);
     });
+};
+
+export const fetchMessagesOfAChat = async (selectedChat, setMessages) => {
+  await axios
+    .get(`/message/${selectedChat}`, {
+      headers: authHeader(),
+    })
+    .then((res) => {
+      setMessages(res.data);
+    })
+    .catch((err) => console.log(err));
+};
+
+export const sendMessage = async (selectedChat, content, setMessages) => {
+  await axios
+    .post(
+      '/message',
+      { chatId: selectedChat, content: content },
+      { headers: authHeader() }
+    )
+    .then((res) => {
+      setMessages((prev) => [...prev, res.data]);
+    })
+    .catch((err) => console.log('Error while sending the message', err));
 };

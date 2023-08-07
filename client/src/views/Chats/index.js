@@ -1,34 +1,28 @@
 import React, { useState, useEffect, useContext } from 'react';
 import ChatBox from './components/ChatBox';
-import MessageContainer from './components/Message';
-import {
-  TextField,
-  Grid,
-  Paper,
-  Divider,
-  List,
-  Fab,
-  Button,
-} from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
+import { TextField, Grid, Paper, Divider, List, Button } from '@mui/material';
+
 import './index.css';
 import { fetchChats } from 'services/ChatServices';
 import { AppContext } from 'context/AppContext';
 import SideDrawer from './components/SideDrawer';
 import GroupChatModal from './components/GroupChatModal';
+import SingleChat from './components/SingleChat';
 
 const Chat = () => {
   const { user } = useContext(AppContext);
   const [chatList, setChatList] = useState([]);
   const [openSearchDrawer, setOpenSearchDrawer] = useState(false);
-  const [selectedChat, setSelectedChat] = useState();
+  const [selectedChat, setSelectedChat] = useState('');
   const [openCreateGroupChat, setOpenCreateGroupChat] = useState(false);
 
   useEffect(() => {
     fetchChats(setChatList);
   }, []);
-  console.log(chatList);
-  console.log('selected', selectedChat);
+
+  const handleSelectedChat = (chatId) => {
+    setSelectedChat(chatId);
+  };
 
   const getSenderName = (chatId) => {
     let chat = chatList?.find((chat) => chat?._id === chatId);
@@ -48,7 +42,6 @@ const Chat = () => {
           <SideDrawer
             openSearchDrawer={openSearchDrawer}
             setOpenSearchDrawer={setOpenSearchDrawer}
-            selectedChat={selectedChat}
             setSelectedChat={setSelectedChat}
             chatList={chatList}
             setChatList={setChatList}
@@ -78,7 +71,7 @@ const Chat = () => {
               {chatList?.map((chat) => (
                 <ChatBox
                   className="chat-box"
-                  onClick={() => setSelectedChat(chat?._id)}
+                  onClick={() => handleSelectedChat(chat?._id)}
                   key={chat?._id}
                   username={
                     !chat?.isGroupChat
@@ -87,7 +80,7 @@ const Chat = () => {
                   }
                   online={false}
                   selected={selectedChat === chat?._id}
-                  latestMessage={'Hello'}
+                  latestMessage={chat?.latestMessage?.content}
                   profilePic={getSenderName(chat?._id)?.profilePicture}
                 />
               ))}
@@ -95,76 +88,7 @@ const Chat = () => {
           </Grid>
           <Divider orientation="vertical" flexItem />
           <Grid item xs={8}>
-            <List className="messageArea">
-              <MessageContainer
-                index={1}
-                align={'right'}
-                text="Hey man, What's up ?"
-                time={'09:30'}
-              />
-              <MessageContainer
-                index={2}
-                align={'left'}
-                text="Hey, I am Good! What about you ?"
-                time={'09:31'}
-              />
-              <MessageContainer
-                index={3}
-                align={'right'}
-                text="Cool. i am good, let's catch up!"
-                time={'10:30'}
-              />
-              <MessageContainer
-                index={1}
-                align={'right'}
-                text="Hey man, What's up ?"
-                time={'09:30'}
-              />
-              <MessageContainer
-                index={2}
-                align={'left'}
-                text="Hey, I am Good! What about you ?"
-                time={'09:31'}
-              />
-              <MessageContainer
-                index={3}
-                align={'right'}
-                text="Cool. i am good, let's catch up!"
-                time={'10:30'}
-              />
-              <MessageContainer
-                index={1}
-                align={'right'}
-                text="Hey man, What's up ?"
-                time={'09:30'}
-              />
-              <MessageContainer
-                index={2}
-                align={'left'}
-                text="Hey, I am Good! What about you ?"
-                time={'09:31'}
-              />
-              <MessageContainer
-                index={3}
-                align={'right'}
-                text="Cool. i am good, let's catch up!"
-                time={'10:30'}
-              />
-            </List>
-            <Grid container style={{ padding: '20px' }}>
-              <Grid item xs={11}>
-                <TextField
-                  id="outlined-basic-email"
-                  label="Type a message"
-                  fullWidth
-                />
-              </Grid>
-              <Grid xs={1} align="right">
-                <Fab color="primary" aria-label="add">
-                  <SendIcon />
-                </Fab>
-              </Grid>
-            </Grid>
+            <SingleChat selectedChat={selectedChat} />
           </Grid>
         </Grid>
       </div>

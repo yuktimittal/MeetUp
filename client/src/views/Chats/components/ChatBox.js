@@ -8,7 +8,6 @@ const ChatBox = ({
   latestMessage,
   profilePic,
 }) => {
-  console.log('sel', selected);
   return (
     <ListItem
       onClick={onClick}
@@ -19,12 +18,18 @@ const ChatBox = ({
       <ListItemIcon>
         <Avatar alt="Remy Sharp" src={profilePic} />
       </ListItemIcon>
-      <ListItemText>{username}</ListItemText>
-      <ListItemText
-        secondary={online ? 'online' : null}
-        align="right"
-      ></ListItemText>
-      <ListItemText align="bottom">{latestMessage}</ListItemText>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <ListItemText>{username}</ListItemText>
+        <ListItemText
+          secondary={online ? 'online' : null}
+          align="right"
+        ></ListItemText>
+        {latestMessage && (
+          <ListItemText align="bottom" className="latest-message">
+            {latestMessage}
+          </ListItemText>
+        )}
+      </div>
     </ListItem>
   );
 };

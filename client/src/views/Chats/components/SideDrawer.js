@@ -6,7 +6,6 @@ import { CreateOrAccessChat } from 'services/ChatServices';
 const SideDrawer = ({
   openSearchDrawer,
   setOpenSearchDrawer,
-  selectedChat,
   setSelectedChat,
   chatList,
   setChatList,
@@ -22,7 +21,6 @@ const SideDrawer = ({
     CreateOrAccessChat(userId, setSelectedChat, chatList, setChatList);
     setOpenSearchDrawer(false);
   };
-  console.log('selected', selectedChat);
   return (
     <SwipeableDrawer
       anchor={'left'}
