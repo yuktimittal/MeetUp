@@ -62,7 +62,12 @@ export const fetchMessagesOfAChat = async (selectedChat, setMessages) => {
     .catch((err) => console.log(err));
 };
 
-export const sendMessage = async (selectedChat, content, setMessages) => {
+export const sendMessage = async (
+  selectedChat,
+  content,
+  setMessages,
+  setNewMessage
+) => {
   await axios
     .post(
       '/message',
@@ -71,6 +76,7 @@ export const sendMessage = async (selectedChat, content, setMessages) => {
     )
     .then((res) => {
       setMessages((prev) => [...prev, res.data]);
+      setNewMessage('');
     })
     .catch((err) => console.log('Error while sending the message', err));
 };

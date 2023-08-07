@@ -17,7 +17,7 @@ const SingleChat = ({ selectedChat }) => {
   }, [selectedChat]);
 
   const handleSendMessage = () => {
-    sendMessage(selectedChat, newMessage, setMessages);
+    sendMessage(selectedChat, newMessage, setMessages, setNewMessage);
   };
 
   const getTime = (createdAt) => {
