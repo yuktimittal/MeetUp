@@ -51,13 +51,18 @@ export const CreateGroup = async (
     });
 };
 
-export const fetchMessagesOfAChat = async (selectedChat, setMessages) => {
+export const fetchMessagesOfAChat = async (
+  selectedChat,
+  setMessages,
+  socket
+) => {
   await axios
     .get(`/message/${selectedChat}`, {
       headers: authHeader(),
     })
     .then((res) => {
       setMessages(res.data);
+      socket.emit('join chat', selectedChat);
     })
     .catch((err) => console.log(err));
 };
@@ -66,7 +71,8 @@ export const sendMessage = async (
   selectedChat,
   content,
   setMessages,
-  setNewMessage
+  setNewMessage,
+  socket
 ) => {
   await axios
     .post(
@@ -77,6 +83,7 @@ export const sendMessage = async (
     .then((res) => {
       setMessages((prev) => [...prev, res.data]);
       setNewMessage('');
+      socket.emit('new message', res.data);
     })
     .catch((err) => console.log('Error while sending the message', err));
 };
