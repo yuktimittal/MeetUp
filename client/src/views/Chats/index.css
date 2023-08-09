@@ -1,6 +1,6 @@
 .chat-screen{
     margin-top: 5rem;
-    height: 100%;
+    /* height: 100%; */
 }
 .chatSection{
     width: 100%
@@ -11,17 +11,15 @@
 }
 
 .messageArea {
-    height: 75vh;
+    height: 63vh;
     overflow-y: auto;
 }
 
 .chatlistArea{
-    height: 75vh;
+    height: 72vh;
     overflow-y: auto;
 }
-.chat-box{
-    border: 1rem solid red !important;
-}
+
 .selected-chat-box-item{
     background-color: #5B9A8B !important;
  
@@ -30,4 +28,10 @@
     margin-top: -0.8rem !important;
     color: #656565;
     font-size: 0.9rem !important;
+}
+.left-chat-profile{
+    display: flex;
+}
+.chat-header-toolbar{
+    padding-left: 0 !important;
 }

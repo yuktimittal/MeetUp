@@ -120,6 +120,29 @@ const SingleChat = ({ selectedChat, chatName }) => {
   return (
     selectedChat && (
       <div>
+        <Box
+          style={{
+            backgroundColor: '#66B2B2',
+            padding: '0.2rem 0.5rem',
+          }}
+        >
+          <Toolbar
+            className="chat-header-toolbar"
+            sx={{ justifyContent: 'space-between' }}
+          >
+            <div
+              style={{
+                display: 'flex',
+              }}
+            >
+              <Avatar style={{ margin: '1rem' }}>{chatName[0]}</Avatar>
+              <Typography style={{ marginTop: '1.5rem' }}>
+                {chatName}
+              </Typography>
+            </div>
+            <VisibilityIcon sx={{ marginLeft: 'auto' }} />
+          </Toolbar>
+        </Box>
         <List className="messageArea">
           {messages &&
             messages.map((message) => (

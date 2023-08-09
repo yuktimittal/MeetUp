@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, ListItem, ListItemText } from '@mui/material';
-const MessageContainer = ({ index, align, text, time }) => {
+const MessageContainer = ({ index, align, text, profilePicture, time }) => {
   return (
     <ListItem key={index}>
       <Grid container>
