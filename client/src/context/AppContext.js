@@ -6,6 +6,8 @@ const AppContextProvider = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [user, setUser] = useState({});
+  const [notifications, setNotifications] = useState([]);
+  const [selectedChat, setSelectedChat] = useState('');
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('user'));
@@ -17,7 +19,16 @@ const AppContextProvider = ({ children }) => {
   }, [navigate]);
 
   return (
-    <AppContext.Provider value={{ user, setUser }}>
+    <AppContext.Provider
+      value={{
+        user,
+        setUser,
+        notifications,
+        setNotifications,
+        selectedChat,
+        setSelectedChat,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

@@ -16,11 +16,15 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 import './index.css';
 import { Link } from 'react-router-dom';
-import { Menu } from 'config/Routes/Menu.js';
+import { Menu as RouteMenu } from 'config/Routes/Menu.js';
 import ProfileDropdown from './ProfileDropdown';
 import { AppContext } from 'context/AppContext';
+import NotificationDropdown from './NotificationDropdown';
+import NotificationBadge from 'react-notification-badge';
+import { Effect } from 'react-notification-badge';
 
 const drawerWidth = 240;
 
@@ -31,7 +35,7 @@ const Header = (props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const { user } = useContext(AppContext);
+  const { user, notifications } = useContext(AppContext);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -43,8 +47,8 @@ const Header = (props) => {
       </Typography>
       <Divider />
       <List>
-        {Menu.map((item) => (
-          <ListItem key={item} disablePadding>
+        {RouteMenu.map((item) => (
+          <ListItem key={item.name} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
               <Link to={item.path}>
                 <ListItemText primary={item.name} />
@@ -57,6 +61,7 @@ const Header = (props) => {
   );
 
   const [anchorEl, setAnchorEl] = useState();
+  const [notificationAnchorEl, setNotificationAnchorEl] = useState();
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -101,7 +106,7 @@ const Header = (props) => {
 
           {user && user?.email ? (
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {Menu.map((item) => (
+              {RouteMenu.map((item) => (
                 <Link
                   key={item.name}
                   className="header-menu-link header-menu-margin"
@@ -113,6 +118,26 @@ const Header = (props) => {
               <Link to={'/chats'}>
                 <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
               </Link>
+              <IconButton
+                aria-controls="notification-menu"
+                aria-haspopup="true"
+                aria-expanded={true}
+                onClick={(event) => {
+                  setNotificationAnchorEl(event.currentTarget);
+                }}
+              >
+                <NotificationsIcon className="header-menu-link header-menu-margin chat-icon" />
+                <NotificationBadge
+                  className="notification-badge"
+                  count={notifications?.length}
+                  effect={Effect.SCALE}
+                />
+              </IconButton>
+              <NotificationDropdown
+                notificationAnchorEl={notificationAnchorEl}
+                setNotificationAnchorEl={setNotificationAnchorEl}
+                notifications={notifications}
+              />
 
               <IconButton
                 className="Profile"

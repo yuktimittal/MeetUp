@@ -1,18 +1,29 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import MessageContainer from './Message';
-import { List, Fab, Grid, TextField } from '@mui/material';
+import {
+  List,
+  Fab,
+  Grid,
+  TextField,
+  IconButton,
+  Box,
+  Avatar,
+  Typography,
+  Toolbar,
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import { fetchMessagesOfAChat, sendMessage } from 'services/ChatServices';
 import { AppContext } from 'context/AppContext';
 import io from 'socket.io-client';
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/animations/typing.json';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const ENDPOINT = 'http://localhost:4000';
 var socket, selectedChatCompare;
 
-const SingleChat = ({ selectedChat }) => {
-  const { user } = useContext(AppContext);
+const SingleChat = ({ selectedChat, chatName }) => {
+  const { user, notifications, setNotifications } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [socketConnected, setSocketConnected] = useState(false);
@@ -27,8 +38,6 @@ const SingleChat = ({ selectedChat }) => {
       preserverAspectRatio: 'xMidYMid slice',
     },
   };
-
-  console.log('connected', socketConnected);
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -64,6 +73,9 @@ const SingleChat = ({ selectedChat }) => {
         selectedChatCompare !== newMessageReceived.chat._id
       ) {
         //give notification
+        if (!notifications.includes(newMessageReceived)) {
+          setNotifications([newMessageReceived, ...notifications]);
+        }
       } else {
         setMessages([...messages, newMessageReceived]);
       }
@@ -115,6 +127,7 @@ const SingleChat = ({ selectedChat }) => {
                 key={message?._id}
                 align={message?.sender?._id === user?.id ? 'right' : 'left'}
                 text={message?.content}
+                profilePicture={message?.sender?.profilePicture}
                 time={getTime(message.createdAt)}
               />
             ))}
@@ -142,7 +155,9 @@ const SingleChat = ({ selectedChat }) => {
           </Grid>
           <Grid xs={1} align="right">
             <Fab color="primary" aria-label="add">
-              <SendIcon onClick={handleSendMessage} />
+              <IconButton onClick={handleSendMessage}>
+                <SendIcon />
+              </IconButton>
             </Fab>
           </Grid>
         </Grid>

@@ -46,7 +46,7 @@ const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
       {user ? (
-        <>
+        <div>
           <MenuItem>View Profile</MenuItem>
 
           <MenuItem onClick={() => signOut(setUser, navigate)}>
@@ -55,7 +55,7 @@ const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
             </ListItemIcon>
             Logout
           </MenuItem>
-        </>
+        </div>
       ) : (
         <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
           <MenuItem>Log In</MenuItem>
