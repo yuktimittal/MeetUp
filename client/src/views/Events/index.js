@@ -30,6 +30,7 @@ const Events = () => {
         <h3 className="welcome-text1">{WELCOME_MSG}</h3>
       </div>
       <Grid
+        item
         container
         justifyContent="center"
         columnSpacing={{ xs: 2, sm: 4, md: 6 }}
@@ -46,17 +47,6 @@ const Events = () => {
               />
             </Grid>
           ))}
-        {/* {[...Array(5)].map((_, i) => (
-          <Grid key={i} item>
-            <EventCard
-              eventTitle={'Nahargarh Trek'}
-              date={'September 10, 2022'}
-              eventDescription={
-                'This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.'
-              }
-            />
-          </Grid>
-        ))} */}
       </Grid>
     </div>
   );

@@ -18,17 +18,19 @@ import io from 'socket.io-client';
 import Lottie from 'react-lottie';
 import animationData from '../../../assets/animations/typing.json';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import ChatInfo from './ChatInfo';
 
 const ENDPOINT = 'http://localhost:4000';
 var socket, selectedChatCompare;
 
-const SingleChat = ({ selectedChat, chatName }) => {
+const SingleChat = ({ selectedChat, chat, chatName, profilePicture }) => {
   const { user, notifications, setNotifications } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [socketConnected, setSocketConnected] = useState(false);
   const [typing, setTyping] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
+  const [openChatInfo, setOpenChatInfo] = useState(false);
 
   const defaultOptions = {
     loop: true,
@@ -120,6 +122,13 @@ const SingleChat = ({ selectedChat, chatName }) => {
   return (
     selectedChat && (
       <div>
+        <ChatInfo
+          chat={chat}
+          chatName={chatName}
+          profilePicture={profilePicture}
+          openChatInfo={openChatInfo}
+          setOpenChatInfo={setOpenChatInfo}
+        />
         <Box
           style={{
             backgroundColor: '#66B2B2',
@@ -135,12 +144,19 @@ const SingleChat = ({ selectedChat, chatName }) => {
                 display: 'flex',
               }}
             >
-              <Avatar style={{ margin: '1rem' }}>{chatName[0]}</Avatar>
+              <Avatar style={{ margin: '1rem' }}>
+                {chat?.isGroupChat ? chatName?.[0] : profilePicture}
+              </Avatar>
               <Typography style={{ marginTop: '1.5rem' }}>
                 {chatName}
               </Typography>
             </div>
-            <VisibilityIcon sx={{ marginLeft: 'auto' }} />
+            <IconButton
+              sx={{ marginLeft: 'auto' }}
+              onClick={() => setOpenChatInfo(true)}
+            >
+              <VisibilityIcon />
+            </IconButton>
           </Toolbar>
         </Box>
         <List className="messageArea">
@@ -176,11 +192,9 @@ const SingleChat = ({ selectedChat, chatName }) => {
               fullWidth
             />
           </Grid>
-          <Grid xs={1} align="right">
-            <Fab color="primary" aria-label="add">
-              <IconButton onClick={handleSendMessage}>
-                <SendIcon />
-              </IconButton>
+          <Grid item xs={1} align="right">
+            <Fab color="primary" aria-label="add" onClick={handleSendMessage}>
+              <SendIcon />
             </Fab>
           </Grid>
         </Grid>

@@ -13,7 +13,7 @@ const ChatBox = ({
       onClick={onClick}
       button
       key={username}
-      className={selected && 'selected-chat-box-item'}
+      className={selected ? 'selected-chat-box-item' : null}
     >
       <ListItemIcon>
         <Avatar alt="Remy Sharp" src={profilePic} />

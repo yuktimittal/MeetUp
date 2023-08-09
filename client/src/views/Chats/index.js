@@ -93,11 +93,13 @@ const Chat = () => {
           <Grid item xs={8.6}>
             <SingleChat
               selectedChat={selectedChat}
+              chat={selectedWholeChat}
               chatName={
                 !selectedWholeChat?.isGroupChat
                   ? getSenderName(selectedWholeChat?._id)?.name
                   : selectedWholeChat?.name
               }
+              profilePic={getSenderName(selectedWholeChat?._id)?.profilePicture}
             />
           </Grid>
         </Grid>

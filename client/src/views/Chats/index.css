@@ -35,3 +35,8 @@
 .chat-header-toolbar{
     padding-left: 0 !important;
 }
+.test-avatar{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
