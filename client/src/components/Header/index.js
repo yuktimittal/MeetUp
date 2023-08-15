@@ -128,7 +128,6 @@ const Header = (props) => {
               >
                 <NotificationsIcon className="header-menu-link header-menu-margin chat-icon" />
                 <NotificationBadge
-                  className="notification-badge"
                   count={notifications?.length}
                   effect={Effect.SCALE}
                 />

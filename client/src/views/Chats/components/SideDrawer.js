@@ -10,7 +10,7 @@ const SideDrawer = ({
   chatList,
   setChatList,
 }) => {
-  const [users, setUsers] = useState();
+  const [users, setUsers] = useState([]);
   const [search, setSearch] = useState('');
 
   const handleSearch = (e) => {
@@ -20,6 +20,8 @@ const SideDrawer = ({
   const handleCreateChat = (userId) => {
     CreateOrAccessChat(userId, setSelectedChat, chatList, setChatList);
     setOpenSearchDrawer(false);
+    setSearch('');
+    setUsers([]);
   };
   return (
     <SwipeableDrawer
@@ -28,8 +30,10 @@ const SideDrawer = ({
       onClose={() => setOpenSearchDrawer(false)}
       onOpen={() => setOpenSearchDrawer(true)}
     >
-      <Typography>Search users</Typography>
-      <Grid item xs={12} style={{ padding: '10px' }}>
+      <Typography variant="h6" gutterBottom className="side-drawer-heading">
+        Create New Chat
+      </Typography>
+      <Grid item xs={12} className="sidedrawer-search-bar">
         <TextField
           id="outlined-basic-email"
           label="Search"

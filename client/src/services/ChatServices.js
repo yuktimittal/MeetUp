@@ -22,7 +22,8 @@ export const CreateOrAccessChat = async (
       console.log('setting selected chat inside access chat', res.data?._id);
       setSelectedChat(res.data?._id);
       if (!chatList.find((c) => c._id === res.data._id)) {
-        setChatList(res.data, ...chatList);
+        setChatList([res.data, ...chatList]);
+
         console.log('set list');
       }
     })
@@ -31,7 +32,9 @@ export const CreateOrAccessChat = async (
 
 export const CreateGroup = async (
   groupName,
+  setGroupName,
   userIds,
+  setUserIds,
   setChatList,
   setOpenCreateGroupChat
 ) => {
@@ -44,10 +47,14 @@ export const CreateGroup = async (
     .then((res) => {
       setChatList((prev) => [res.data, ...prev]);
       setOpenCreateGroupChat(false);
+      setGroupName('');
+      setUserIds([]);
     })
     .catch((err) => {
       console.log('Error while creating group chat', err);
       setOpenCreateGroupChat(false);
+      setGroupName('');
+      setUserIds([]);
     });
 };
 

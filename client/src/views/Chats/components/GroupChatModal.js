@@ -82,7 +82,14 @@ const GroupChatModal = ({
   const handleCreateGroup = () => {
     console.log('name', groupName);
     console.log('users', personName);
-    CreateGroup(groupName, personName, setChatList, setOpenCreateGroupChat);
+    CreateGroup(
+      groupName,
+      setGroupName,
+      personName,
+      setPersonName,
+      setChatList,
+      setOpenCreateGroupChat
+    );
   };
 
   return (
