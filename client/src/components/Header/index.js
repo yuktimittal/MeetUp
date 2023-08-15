@@ -144,7 +144,11 @@ const Header = (props) => {
                 sx={{ p: 0 }}
                 aria-expanded={true}
               >
-                <Avatar>Y</Avatar>
+                {user?.profilePicture ? (
+                  <Avatar src={user?.profilePicture}></Avatar>
+                ) : (
+                  <Avatar>{user?.email?.[0]}</Avatar>
+                )}
               </IconButton>
             </Box>
           ) : (

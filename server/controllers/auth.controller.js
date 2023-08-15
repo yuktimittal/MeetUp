@@ -52,8 +52,10 @@ export const signin = (req, res) => {
 
     res.status(200).send({
       id: user._id,
+      name: user.name,
       email: user.email,
       accessToken: token,
+      profilePicture: user.profilePicture,
     });
   });
 };

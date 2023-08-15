@@ -1,13 +1,12 @@
-import { Menu, MenuItem, ListItemIcon } from '@mui/material';
+import { Menu, MenuItem, ListItemIcon, Typography } from '@mui/material';
 import { Logout } from '@mui/icons-material';
-import { getLoggedInUser, signOut } from 'login/services';
+import { signOut } from 'login/services';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from 'context/AppContext';
 
 const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
-  const user = getLoggedInUser();
-  const { setUser } = useContext(AppContext);
+  const { user, setUser } = useContext(AppContext);
   const navigate = useNavigate();
 
   return (
@@ -47,6 +46,10 @@ const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
     >
       {user ? (
         <div>
+          <Typography flexGrow={1} color="#1F8A70" sx={{ textAlign: 'center' }}>
+            {user?.name}
+          </Typography>
+          <hr />
           <MenuItem>View Profile</MenuItem>
 
           <MenuItem onClick={() => signOut(setUser, navigate)}>
