@@ -16,7 +16,7 @@ const ChatBox = ({
       className={selected ? 'selected-chat-box-item' : null}
     >
       <ListItemIcon>
-        <Avatar alt="Remy Sharp" src={profilePic} />
+        <Avatar alt={username?.[0]} src={profilePic} />
       </ListItemIcon>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <ListItemText>{username}</ListItemText>
@@ -26,7 +26,7 @@ const ChatBox = ({
         ></ListItemText>
         {latestMessage && (
           <ListItemText align="bottom" className="latest-message">
-            {latestMessage}
+            {`${latestMessage?.sender?.name}: ${latestMessage?.content}`}
           </ListItemText>
         )}
       </div>

@@ -83,7 +83,7 @@ const Chat = () => {
                   }
                   online={false}
                   selected={selectedChat === chat?._id}
-                  latestMessage={chat?.latestMessage?.content}
+                  latestMessage={chat?.latestMessage}
                   profilePic={getSenderName(chat?._id)?.profilePicture}
                 />
               ))}
