@@ -100,6 +100,7 @@ const Chat = () => {
                   : selectedWholeChat?.name
               }
               profilePic={getSenderName(selectedWholeChat?._id)?.profilePicture}
+              setChatList={setChatList}
             />
           </Grid>
         </Grid>

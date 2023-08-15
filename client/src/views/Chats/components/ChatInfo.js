@@ -1,5 +1,15 @@
-import React from 'react';
-import { Box, Typography, Modal, Avatar, Toolbar, Chip } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Typography,
+  Modal,
+  Avatar,
+  Toolbar,
+  Chip,
+  IconButton,
+} from '@mui/material';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { renameGroup } from 'services/ChatServices';
 
 const style = {
   position: 'absolute',
@@ -19,25 +29,51 @@ const ChatInfo = ({
   profilePicture,
   openChatInfo,
   setOpenChatInfo,
+  setChatList,
 }) => {
-  console.log('chat', chat);
+  const [isGroupNameEditable, setGroupNameEditable] = useState(false);
+  const [newGroupName, setNewGroupName] = useState('');
   const handleClose = () => setOpenChatInfo(false);
   const isGroupAdmin = (userId) => {
     if (chat?.groupAdmin?._id === userId) return true;
     return false;
   };
+  const handleEditing = () => {
+    setGroupNameEditable(true);
+  };
+  const handlGroupNameChange = (e) => {
+    setNewGroupName(e.target.innerText);
+  };
+  const handleNameSubmit = () => {
+    renameGroup(chat?._id, newGroupName, setGroupNameEditable, setChatList);
+  };
+
   return (
     <Modal open={openChatInfo} onClose={handleClose}>
       <Box sx={style}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Typography
+            contentEditable={isGroupNameEditable}
+            suppressContentEditableWarning={true}
+            onInput={handlGroupNameChange}
+            onBlur={handleNameSubmit}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                handleNameSubmit(event);
+              }
+            }}
             flexGrow={1}
-            className="create-group-title"
             variant="h6"
             color="#1F8A70"
             textAlign={'center'}
           >
             {chatName}
+            {chat?.isGroupChat && !isGroupNameEditable && (
+              <IconButton onClick={handleEditing}>
+                <ModeEditIcon />
+              </IconButton>
+            )}
           </Typography>
         </div>
 
@@ -50,6 +86,7 @@ const ChatInfo = ({
               <div>
                 {chat?.users?.map((user) => (
                   <Toolbar
+                    key={user?._id}
                     style={{ paddingLeft: 0, justifyContent: 'space-between' }}
                   >
                     <Toolbar style={{ paddingLeft: 0 }}>

@@ -94,3 +94,28 @@ export const sendMessage = async (
     })
     .catch((err) => console.log('Error while sending the message', err));
 };
+
+export const renameGroup = async (
+  chatId,
+  newGroupName,
+  setGroupNameEditable,
+  setChatList
+) => {
+  await axios
+    .put(
+      '/chat/renamegroup',
+      {
+        chatId: chatId,
+        newName: newGroupName,
+      },
+      { headers: authHeader() }
+    )
+    .then(() => {
+      setGroupNameEditable(false);
+      fetchChats(setChatList);
+    })
+    .catch((err) => {
+      console.log('Error while renaming group chat', err);
+      setGroupNameEditable(false);
+    });
+};

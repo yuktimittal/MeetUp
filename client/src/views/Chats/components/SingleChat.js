@@ -23,7 +23,13 @@ import ChatInfo from './ChatInfo';
 const ENDPOINT = 'http://localhost:4000';
 var socket, selectedChatCompare;
 
-const SingleChat = ({ selectedChat, chat, chatName, profilePicture }) => {
+const SingleChat = ({
+  selectedChat,
+  chat,
+  chatName,
+  profilePicture,
+  setChatList,
+}) => {
   const { user, notifications, setNotifications } = useContext(AppContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
@@ -128,6 +134,7 @@ const SingleChat = ({ selectedChat, chat, chatName, profilePicture }) => {
           profilePicture={profilePicture}
           openChatInfo={openChatInfo}
           setOpenChatInfo={setOpenChatInfo}
+          setChatList={setChatList}
         />
         <Box
           style={{

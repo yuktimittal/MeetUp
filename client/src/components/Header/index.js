@@ -79,15 +79,17 @@ const Header = (props) => {
       />
       <AppBar component="nav">
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {user && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <img style={{ width: '3rem' }} src={drinks} alt="app-logo" />
 
           <Typography
@@ -153,16 +155,14 @@ const Header = (props) => {
             </Box>
           ) : (
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              <Link
-                className="header-menu-link header-menu-margin"
-                to={'/login'}
-              >
+              <Link className="header-menu-link header-menu-margin" to={'/'}>
                 Login
               </Link>
             </Box>
           )}
         </Toolbar>
       </AppBar>
+
       <Box component="nav">
         <Drawer
           container={container}
