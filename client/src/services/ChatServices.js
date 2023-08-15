@@ -79,6 +79,7 @@ export const sendMessage = async (
   content,
   setMessages,
   setNewMessage,
+  setChatList,
   socket
 ) => {
   await axios
@@ -90,6 +91,7 @@ export const sendMessage = async (
     .then((res) => {
       setMessages((prev) => [...prev, res.data]);
       setNewMessage('');
+      fetchChats(setChatList);
       socket.emit('new message', res.data);
     })
     .catch((err) => console.log('Error while sending the message', err));

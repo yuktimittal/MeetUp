@@ -12,7 +12,11 @@ import {
   Toolbar,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { fetchMessagesOfAChat, sendMessage } from 'services/ChatServices';
+import {
+  fetchChats,
+  fetchMessagesOfAChat,
+  sendMessage,
+} from 'services/ChatServices';
 import { AppContext } from 'context/AppContext';
 import io from 'socket.io-client';
 import Lottie from 'react-lottie';
@@ -84,14 +88,23 @@ const SingleChat = ({
         if (!notifications.includes(newMessageReceived)) {
           setNotifications([newMessageReceived, ...notifications]);
         }
+        fetchChats(setChatList);
       } else {
         setMessages([...messages, newMessageReceived]);
+        fetchChats(setChatList);
       }
     });
   });
 
   const handleSendMessage = () => {
-    sendMessage(selectedChat, newMessage, setMessages, setNewMessage, socket);
+    sendMessage(
+      selectedChat,
+      newMessage,
+      setMessages,
+      setNewMessage,
+      setChatList,
+      socket
+    );
     socket.emit('stop typing', selectedChat);
     setTyping(false);
   };
