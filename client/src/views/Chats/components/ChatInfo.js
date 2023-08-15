@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Modal, Avatar, Toolbar } from '@mui/material';
+import { Box, Typography, Modal, Avatar, Toolbar, Chip } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -22,6 +22,10 @@ const ChatInfo = ({
 }) => {
   console.log('chat', chat);
   const handleClose = () => setOpenChatInfo(false);
+  const isGroupAdmin = (userId) => {
+    if (chat?.groupAdmin?._id === userId) return true;
+    return false;
+  };
   return (
     <Modal open={openChatInfo} onClose={handleClose}>
       <Box sx={style}>
@@ -45,9 +49,22 @@ const ChatInfo = ({
               >{`Group. ${chat?.users?.length} members`}</div>
               <div>
                 {chat?.users?.map((user) => (
-                  <Toolbar style={{ paddingLeft: 0 }}>
-                    <Avatar src={user.profilePicture} alt=""></Avatar>
-                    <span style={{ marginLeft: '1rem' }}>{user.name}</span>
+                  <Toolbar
+                    style={{ paddingLeft: 0, justifyContent: 'space-between' }}
+                  >
+                    <Toolbar style={{ paddingLeft: 0 }}>
+                      <Avatar src={user.profilePicture} alt=""></Avatar>
+                      <span style={{ marginLeft: '1rem' }}>{user.name}</span>
+                    </Toolbar>
+                    {isGroupAdmin(user?._id) && (
+                      <Toolbar className="chat-info-admin-toolbar">
+                        <Chip
+                          label="admin"
+                          color="primary"
+                          variant="outlined"
+                        />
+                      </Toolbar>
+                    )}
                   </Toolbar>
                 ))}
               </div>

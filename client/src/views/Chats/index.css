@@ -48,3 +48,7 @@
 .sidedrawer-search-bar{
     padding: 0.2rem 1rem;
 }
+
+.chat-info-admin-toolbar{
+    padding-right: 0 !important;
+}
