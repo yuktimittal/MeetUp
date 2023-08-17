@@ -7,6 +7,7 @@ import {
   Toolbar,
   Chip,
   IconButton,
+  // Button,
 } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { renameGroup } from 'services/ChatServices';
@@ -91,6 +92,13 @@ const ChatInfo = ({
                   >
                     <Toolbar style={{ paddingLeft: 0 }}>
                       <Avatar src={user.profilePicture} alt=""></Avatar>
+                      {/* <Toolbar
+                        style={{
+                          paddingLeft: 0,
+                          flexDirection: 'column',
+                          justifyContent: 'flex-start',
+                        }}
+                      > */}
                       <span style={{ marginLeft: '1rem' }}>{user.name}</span>
                     </Toolbar>
                     {isGroupAdmin(user?._id) && (
@@ -102,6 +110,15 @@ const ChatInfo = ({
                         />
                       </Toolbar>
                     )}
+                    {/* <Button
+                      variant="text"
+                      sx={{ fontSize: '0.7rem' }}
+                      style={{
+                        color: 'blue',
+                      }}
+                    >
+                      remove
+                    </Button> */}
                   </Toolbar>
                 ))}
               </div>

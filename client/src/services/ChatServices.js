@@ -123,3 +123,42 @@ export const renameGroup = async (
       setGroupNameEditable(false);
     });
 };
+
+export const removeParticipantFromGroup = async (
+  chatId,
+  removedUser,
+  setChatList
+) => {
+  await axios
+    .put(
+      '/chat/removeFromGroup',
+      {
+        chatId: chatId,
+        removedUser: removedUser,
+      },
+      { headers: authHeader() }
+    )
+    .then(() => {
+      fetchChats(setChatList);
+    })
+    .catch((err) => {
+      console.log('Error while removing participant from group chat', err);
+    });
+};
+export const addParticipantsInGroup = async (chatId, newUsers, setChatList) => {
+  await axios
+    .put(
+      '/chat/addtogroup',
+      {
+        chatId: chatId,
+        newUsers: newUsers,
+      },
+      { headers: authHeader() }
+    )
+    .then(() => {
+      fetchChats(setChatList);
+    })
+    .catch((err) => {
+      console.log('Error while adding participants in group ', err);
+    });
+};
