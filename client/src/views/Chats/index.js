@@ -45,6 +45,7 @@ const Chat = () => {
             openSearchDrawer={openSearchDrawer}
             setOpenSearchDrawer={setOpenSearchDrawer}
             setSelectedChat={setSelectedChat}
+            setSelectedWholeChat={setSelectedWholeChat}
             chatList={chatList}
             setChatList={setChatList}
           />
@@ -92,6 +93,7 @@ const Chat = () => {
           <Divider orientation="vertical" flexItem />
           <Grid item xs={8.6}>
             <SingleChat
+              key={selectedChat}
               selectedChat={selectedChat}
               chat={selectedWholeChat}
               chatName={

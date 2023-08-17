@@ -16,6 +16,8 @@ import { useState } from 'react';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
+
+import { Navigate } from 'react-router-dom';
 import drinks from 'assets/images/drinks_green.svg';
 import {
   CREATE_ACCOUNT_TEXT,
@@ -74,6 +76,9 @@ const SignUp = () => {
 
     setUserDetails({ email: null, password: null });
   };
+  if (isSignedUp?.successful) {
+    return <Navigate to="/events" />;
+  }
 
   const uploadPic = (pic) => {
     setLoading(true);

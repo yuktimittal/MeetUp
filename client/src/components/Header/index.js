@@ -101,7 +101,7 @@ const Header = (props) => {
               display: { xs: 'block', sm: 'block' },
             }}
           >
-            <Link className="app-logo-link" to="/">
+            <Link className="app-logo-link" to="/events">
               Mulakaat
             </Link>
           </Typography>

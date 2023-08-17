@@ -7,6 +7,7 @@ const SideDrawer = ({
   openSearchDrawer,
   setOpenSearchDrawer,
   setSelectedChat,
+  setSelectedWholeChat,
   chatList,
   setChatList,
 }) => {
@@ -18,7 +19,13 @@ const SideDrawer = ({
     fetchUsers(setUsers, e.target.value);
   };
   const handleCreateChat = (userId) => {
-    CreateOrAccessChat(userId, setSelectedChat, chatList, setChatList);
+    CreateOrAccessChat(
+      userId,
+      setSelectedChat,
+      setSelectedWholeChat,
+      chatList,
+      setChatList
+    );
     setOpenSearchDrawer(false);
     setSearch('');
     setUsers([]);

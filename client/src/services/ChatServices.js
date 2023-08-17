@@ -13,6 +13,7 @@ export const fetchChats = async (setChatList) => {
 export const CreateOrAccessChat = async (
   userId,
   setSelectedChat,
+  setSelectedWholeChat,
   chatList,
   setChatList
 ) => {
@@ -21,6 +22,7 @@ export const CreateOrAccessChat = async (
     .then((res) => {
       console.log('setting selected chat inside access chat', res.data?._id);
       setSelectedChat(res.data?._id);
+      setSelectedWholeChat(res.data);
       if (!chatList.find((c) => c._id === res.data._id)) {
         setChatList([res.data, ...chatList]);
 

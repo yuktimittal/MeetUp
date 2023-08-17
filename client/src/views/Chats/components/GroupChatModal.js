@@ -63,7 +63,11 @@ const GroupChatModal = ({
   const theme = useTheme();
   const [groupName, setGroupName] = useState('');
   const [personName, setPersonName] = useState([]);
-  const handleClose = () => setOpenCreateGroupChat(false);
+  const handleClose = () => {
+    setOpenCreateGroupChat(false);
+    setGroupName('');
+    setPersonName([]);
+  };
 
   useEffect(() => {
     fetchUsers(setUsers);

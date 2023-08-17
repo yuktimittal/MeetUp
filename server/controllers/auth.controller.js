@@ -20,8 +20,11 @@ export const signup = (req, res) => {
       expiresIn: 86400, // 24 hours
     });
     res.send({
+      id: user._id,
+      name: user.name,
+      email: user.email,
       accessToken: token,
-      message: 'User was registered successfully!',
+      profilePicture: user.profilePicture,
     });
   });
 };
