@@ -13,6 +13,7 @@ import {
   ListItemText,
   Drawer,
   Avatar,
+  Button,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
@@ -25,6 +26,7 @@ import { AppContext } from 'context/AppContext';
 import NotificationDropdown from './NotificationDropdown';
 import NotificationBadge from 'react-notification-badge';
 import { Effect } from 'react-notification-badge';
+import EventForm from 'views/Events/EventForm';
 
 const drawerWidth = 240;
 
@@ -36,6 +38,7 @@ const Header = (props) => {
     setMobileOpen(!mobileOpen);
   };
   const { user, notifications } = useContext(AppContext);
+  const [openEventForm, setOpenEventForm] = useState(false);
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -77,6 +80,10 @@ const Header = (props) => {
         handleClose={handleClose}
         anchorEl={anchorEl}
       />
+      <EventForm
+        openEventForm={openEventForm}
+        setOpenEventForm={setOpenEventForm}
+      />
       <AppBar component="nav">
         <Toolbar>
           {user && (
@@ -108,6 +115,13 @@ const Header = (props) => {
 
           {user && user?.email ? (
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              <Button
+                variant="text"
+                color="black"
+                onClick={() => setOpenEventForm(true)}
+              >
+                Create New Event
+              </Button>
               {RouteMenu.map((item) => (
                 <Link
                   key={item.name}

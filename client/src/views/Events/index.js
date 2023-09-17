@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import dayjs from 'dayjs';
 import EventCard from './EventCard';
 import './index.css';
 import Grid from '@mui/material/Grid';
 import { WELCOME_MSG, WELCOME_TEXT } from './constants';
-import EventServices from 'services/EventServices.js';
+import { getAllEvents } from 'services/EventServices.js';
 import { useNavigate } from 'react-router-dom';
+import { AppContext } from 'context/AppContext';
 
 const Events = () => {
-  const [eventsList, setEventsList] = useState([]);
+  const { eventsList, setEventsList } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Events = () => {
   }, [navigate]);
 
   useEffect(() => {
-    EventServices(setEventsList);
+    getAllEvents(setEventsList);
   }, []);
 
   return (
@@ -41,6 +42,7 @@ const Events = () => {
           eventsList?.map((event) => (
             <Grid key={event?._id} item>
               <EventCard
+                eventId={event?._id}
                 eventTitle={event?.name}
                 date={dayjs(event?.eventDate).format('MMMM DD,YYYY')}
                 eventDescription={event?.description}

@@ -17,6 +17,9 @@ function App() {
       buttons: {
         main: '#799496',
       },
+      black: {
+        main: '#000',
+      },
     },
   });
   return (
