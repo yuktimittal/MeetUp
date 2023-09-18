@@ -3,7 +3,9 @@ import asyncHandler from 'express-async-handler';
 
 export const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find().sort({ createdAt: -1 });
+    const events = await Event.find()
+      .sort({ createdAt: -1 })
+      .populate('registrations');
     return res.status(200).send(events);
   } catch (err) {
     console.log(err);

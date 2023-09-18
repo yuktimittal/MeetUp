@@ -11,10 +11,9 @@ import { AppContext } from 'context/AppContext';
 const Events = () => {
   const { eventsList, setEventsList } = useContext(AppContext);
   const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem('user'));
-
     if (userInfo) {
       navigate('/events');
     }
@@ -23,6 +22,15 @@ const Events = () => {
   useEffect(() => {
     getAllEvents(setEventsList);
   }, []);
+  const checkRegistration = (event) => {
+    const registeredUser = event?.registrations?.find(
+      (registration) => registration.user === userInfo?.id
+    );
+    if (registeredUser) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div className="home-page">
@@ -42,10 +50,12 @@ const Events = () => {
           eventsList?.map((event) => (
             <Grid key={event?._id} item>
               <EventCard
+                key={event?._id}
                 eventId={event?._id}
                 eventTitle={event?.name}
                 date={dayjs(event?.eventDate).format('MMMM DD,YYYY')}
                 eventDescription={event?.description}
+                isUserRegistered={checkRegistration(event)}
               />
             </Grid>
           ))}

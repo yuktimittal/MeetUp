@@ -36,3 +36,13 @@ export const createEvent = async (
     })
     .catch((err) => console.log(err));
 };
+
+export const registerForEvent = async (eventId, setEventList) => {
+  await axios
+    .post('/register', { eventId: eventId }, { headers: authHeader() })
+    .then((res) => {
+      console.log(res);
+      getAllEvents(setEventList);
+    })
+    .catch((err) => console.log(err));
+};

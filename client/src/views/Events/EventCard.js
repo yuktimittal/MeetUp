@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Card,
   CardHeader,
@@ -13,8 +13,21 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import picture from 'assets/images/bg.jpg';
+import { registerForEvent } from 'services/EventServices';
+import { AppContext } from 'context/AppContext';
 
-const EventCard = ({ eventTitle, date, eventDescription }) => {
+const EventCard = ({
+  eventId,
+  eventTitle,
+  date,
+  eventDescription,
+  isUserRegistered,
+}) => {
+  const { setEventList } = useContext(AppContext);
+  const handleRegister = () => {
+    console.log(eventId);
+    registerForEvent(eventId, setEventList);
+  };
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -38,8 +51,16 @@ const EventCard = ({ eventTitle, date, eventDescription }) => {
       >
         <div>
           <Tooltip id="button-report" title="Register">
-            <IconButton aria-label="register" size="large">
-              <HowToRegIcon />
+            <IconButton
+              aria-label="register"
+              size="large"
+              onClick={handleRegister}
+            >
+              {isUserRegistered ? (
+                <HowToRegIcon style={{ color: 'teal' }} />
+              ) : (
+                <HowToRegIcon />
+              )}
             </IconButton>
           </Tooltip>
           <IconButton aria-label="share" size="large">
