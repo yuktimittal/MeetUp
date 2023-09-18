@@ -15,6 +15,7 @@ export const createEvent = async (
   description,
   eventDate,
   eventMode,
+  picture,
   setOpenEventForm,
   setEventsList
 ) => {
@@ -26,6 +27,7 @@ export const createEvent = async (
         description: description,
         eventDate: eventDate,
         eventMode: eventMode,
+        picture: picture,
       },
       { headers: authHeader() }
     )

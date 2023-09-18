@@ -6,6 +6,9 @@ import {
   Button,
   Typography,
   MenuItem,
+  InputLabel,
+  FormControl,
+  Input,
 } from '@mui/material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -18,6 +21,8 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
   const [description, setDesription] = useState('');
   const [eventDate, setEventDate] = useState(null);
   const [eventMode, setEventMode] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [picture, setPicture] = useState('');
   const { setEventsList } = useContext(AppContext);
 
   const handleCloseEventForm = () => {
@@ -56,6 +61,7 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
       description,
       eventDate,
       eventMode,
+      picture,
       setOpenEventForm,
       setEventsList
     );
@@ -64,6 +70,38 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
     setDesription(null);
     setEventDate(null);
     setEventMode(null);
+  };
+
+  const uploadPic = (pic) => {
+    setLoading(true);
+    if (pic === undefined) {
+      console.log('Please select an image');
+      return;
+    }
+    if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
+      const data = new FormData();
+      data.append('file', pic);
+      data.append('upload_preset', 'meet-up');
+      data.append('cloud_name', 'dn02dvrtg');
+
+      fetch('https://api.cloudinary.com/v1_1/dn02dvrtg/image/upload', {
+        method: 'post',
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPicture(data.url.toString());
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setLoading(false);
+        });
+    } else {
+      console.log('select an image');
+      setLoading(false);
+      return;
+    }
   };
 
   return (
@@ -114,9 +152,22 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
             </MenuItem>
           ))}
         </TextField>
+        <InputLabel sx={{ mt: 2 }}>{'Upload event poster'}</InputLabel>
+        <FormControl>
+          <Input
+            sx={{ width: '45ch !important' }}
+            placeholder="Upload event poster"
+            name="picture"
+            type="file"
+            accept="image/*"
+            p={1.5}
+            onChange={(e) => uploadPic(e.target.files[0])}
+          />
+        </FormControl>
 
         <Button
           onClick={handleCreateEvent}
+          disabled={loading}
           variant="contained"
           sx={{
             mt: 2,

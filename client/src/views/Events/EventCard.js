@@ -12,7 +12,7 @@ import {
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
-import picture from 'assets/images/bg.jpg';
+import defaultPicture from 'assets/images/bg.jpg';
 import { registerForEvent } from 'services/EventServices';
 import { AppContext } from 'context/AppContext';
 
@@ -21,6 +21,7 @@ const EventCard = ({
   eventTitle,
   date,
   eventDescription,
+  picture,
   isUserRegistered,
 }) => {
   const { setEventList } = useContext(AppContext);
@@ -29,13 +30,18 @@ const EventCard = ({
     registerForEvent(eventId, setEventList);
   };
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: 300 }}>
       <CardHeader
         title={eventTitle}
         subheader={date}
         className="event-card-header"
       />
-      <CardMedia component="img" height="194" image={picture} alt="Trek" />
+      <CardMedia
+        component="img"
+        height="194"
+        image={picture ? picture : defaultPicture}
+        alt="Trek"
+      />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {eventDescription}

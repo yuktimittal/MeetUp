@@ -72,6 +72,7 @@ export const addNewEvent = asyncHandler(async (req, res) => {
     eventTime: req.body.eventTime,
     location: req.body.location,
     createdBy: req.userId,
+    picture: req.body.picture,
   };
 
   const event = await Event.create(new_event);

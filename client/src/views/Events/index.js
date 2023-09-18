@@ -55,6 +55,7 @@ const Events = () => {
                 eventTitle={event?.name}
                 date={dayjs(event?.eventDate).format('MMMM DD,YYYY')}
                 eventDescription={event?.description}
+                picture={event?.picture}
                 isUserRegistered={checkRegistration(event)}
               />
             </Grid>
