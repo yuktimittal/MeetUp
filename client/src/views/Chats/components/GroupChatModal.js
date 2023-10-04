@@ -43,8 +43,6 @@ const MenuProps = {
   },
 };
 
-//
-
 function getStyles(name, personName, theme) {
   return {
     fontWeight:
