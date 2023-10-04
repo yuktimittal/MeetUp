@@ -10,7 +10,6 @@ export const getAllUsers = async (req, res) => {
           ],
         }
       : {};
-    console.log('req', req);
     const users = await User.find(keyword)
       .find({ _id: { $ne: req.userId } })
       .populate('registrations');

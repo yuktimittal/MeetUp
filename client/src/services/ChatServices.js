@@ -20,13 +20,10 @@ export const CreateOrAccessChat = async (
   await axios
     .post('/chat', { userId: userId }, { headers: authHeader() })
     .then((res) => {
-      console.log('setting selected chat inside access chat', res.data?._id);
       setSelectedChat(res.data?._id);
       setSelectedWholeChat(res.data);
       if (!chatList.find((c) => c._id === res.data._id)) {
         setChatList([res.data, ...chatList]);
-
-        console.log('set list');
       }
     })
     .catch((err) => console.log('Error while creating chat', err));
