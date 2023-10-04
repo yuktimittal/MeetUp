@@ -5,8 +5,10 @@ import bcrypt from 'bcryptjs';
 
 export const signup = (req, res) => {
   const user = new User({
+    name: req.body.name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
+    profilePicture: req.body.profilePic ? req.body.profilePic : null,
   });
 
   user.save((err, user) => {
@@ -18,8 +20,11 @@ export const signup = (req, res) => {
       expiresIn: 86400, // 24 hours
     });
     res.send({
+      id: user._id,
+      name: user.name,
+      email: user.email,
       accessToken: token,
-      message: 'User was registered successfully!',
+      profilePicture: user.profilePicture,
     });
   });
 };
@@ -50,8 +55,10 @@ export const signin = (req, res) => {
 
     res.status(200).send({
       id: user._id,
+      name: user.name,
       email: user.email,
       accessToken: token,
+      profilePicture: user.profilePicture,
     });
   });
 };

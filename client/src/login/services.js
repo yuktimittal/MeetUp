@@ -7,15 +7,16 @@ export const authHeader = () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
   if (user && user.accessToken) {
-    console.log(user.accessToken);
     return { 'x-access-token': user.accessToken };
   } else {
     return {};
   }
 };
 
-export const signOut = () => {
+export const signOut = (setUser, navigate) => {
   localStorage.removeItem('user');
+  setUser({});
+  navigate('/');
 };
 
 export const signUp = (userDetails) => {

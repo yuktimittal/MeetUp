@@ -1,0 +1,53 @@
+.chat-screen{
+    margin-top: 5rem;
+}
+.chatSection{
+    width: 100%
+}
+
+.borderRight500{
+    border-right: 1px #e0e0e0;
+}
+
+.messageArea {
+    height: 63vh;
+    overflow-y: auto;
+}
+
+.chatlistArea{
+    height: 72vh;
+    overflow-y: auto;
+}
+
+.selected-chat-box-item{
+    background-color: #5B9A8B !important;
+ 
+}
+.latest-message{
+    margin-top: -0.8rem !important;
+    color: #656565;
+    font-size: 0.9rem !important;
+}
+.left-chat-profile{
+    display: flex;
+}
+.chat-header-toolbar{
+    padding-left: 0 !important;
+}
+.test-avatar{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.side-drawer-heading{
+    margin-top: 0.3rem !important;
+    padding: 0.5rem 1rem;
+    color:#1F8A70;
+}
+.sidedrawer-search-bar{
+    padding: 0.2rem 1rem;
+}
+
+.chat-info-admin-toolbar{
+    padding-right: 0 !important;
+}

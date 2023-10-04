@@ -36,8 +36,8 @@ import { APP_NAME_MULAKAAT } from 'constants';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [userDetails, setUserDetails] = useState({
-    email: null,
-    password: null,
+    email: '',
+    password: '',
   });
   const [isSignedUp, setIsSignedUp] = useState({
     successful: false,
@@ -53,7 +53,9 @@ const Login = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
     await axios
       .post('/auth/signin', userDetails)
       .then((res) => {
