@@ -1,0 +1,35 @@
+.profile-body{
+    margin-top: 5rem
+}
+.profile-bg-image{
+    background-image: url("assets/images/profile_bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 15rem;
+    margin: 0.3rem;
+    width: 99.4%;
+    border-radius: 0.4rem;
+}
+.user-profile-photo{
+    position: absolute;
+    margin-top: 7.5rem !important;
+    margin-left: 1rem;
+    display: flex;
+}
+.profile-name{
+    color: #fff;
+    margin-left: -1rem;
+    
+}
+
+.user-about-section{
+    border: 1px solid #bbbaba;
+    border-radius: 0.4rem;
+    margin: 0.3rem;
+}
+
+.user-profile-other-info{
+    border: 1px solid #bbbaba;
+    border-radius: 0.4rem;
+    margin: 0.3rem;
+}

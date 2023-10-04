@@ -47,18 +47,16 @@ export const getUserById = (req, res) => {
     );
 };
 
-export const updateUserById = (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.params.id },
+export const updateUserById = async (req, res) => {
+  var user = await User.findByIdAndUpdate(
+    req.params.id,
     { $set: { ...req.body } },
-
-    (err, _result) => {
-      if (err) {
-        res.status(400).send(err.toString());
-      }
-      res.send('user details updated successfully');
-    }
+    { new: true }
   );
+  if (!user) {
+    res.status(404);
+  }
+  res.json(user);
 };
 
 export const deleteUserById = (req, res) => {

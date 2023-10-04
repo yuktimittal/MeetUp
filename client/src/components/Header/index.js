@@ -134,12 +134,16 @@ const Header = (props) => {
               <Link to={'/chats'}>
                 <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
               </Link>
+
               <IconButton
                 aria-controls="notification-menu"
                 aria-haspopup="true"
                 aria-expanded={true}
                 onClick={(event) => {
                   setNotificationAnchorEl(event.currentTarget);
+                }}
+                sx={{
+                  '&:hover ': { backgroundColor: 'transparent' },
                 }}
               >
                 <NotificationsIcon className="header-menu-link header-menu-margin chat-icon" />
