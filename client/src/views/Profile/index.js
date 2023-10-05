@@ -2,15 +2,16 @@ import { Avatar, Box, Typography, IconButton } from '@mui/material';
 import './index.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getUserById, updateUser } from 'services/UserServices';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { getUserById } from 'services/UserServices';
+
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import UpdateProfilePictureModal from './UpdateProfilePictureModal';
+import AboutSection from './AboutSection';
 
 const Profile = () => {
   const { id } = useParams();
   const [profileUser, setProfileUser] = useState();
-  const [aboutEditable, setAboutEditable] = useState(false);
+
   const [aboutContent, setAboutContent] = useState();
   const [profilePic, setProfilePic] = useState();
   const [openUpdateProfileModal, setOpenUpdateProfileModal] = useState(false);
@@ -19,12 +20,6 @@ const Profile = () => {
     getUserById(id, setProfileUser);
     setAboutContent(profileUser?.about);
   }, []);
-  const handleEditing = () => {
-    setAboutEditable(true);
-  };
-  const handleAboutChange = (e) => {
-    setAboutContent(e.target.innerText);
-  };
 
   const updateProfilePicture = (pic) => {
     if (pic === undefined) {
@@ -53,12 +48,6 @@ const Profile = () => {
       console.log('select an image');
       return;
     }
-  };
-
-  const handleAboutSubmit = () => {
-    let userDetails = { about: aboutContent };
-    updateUser(id, userDetails, setProfileUser);
-    setAboutEditable(false);
   };
 
   return (
@@ -108,45 +97,15 @@ const Profile = () => {
           </div>
         </Box>
       </div>
-      <Box className="user-about-section">
-        <div style={{ padding: '1rem' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginBottom: '0.5rem',
-            }}
-          >
-            <Typography sx={{ fontWeight: 600 }}>About Me</Typography>
-            {!aboutEditable && (
-              <IconButton onClick={handleEditing}>
-                <ModeEditIcon />
-              </IconButton>
-            )}
-          </div>
-          {profileUser?.about || aboutEditable ? (
-            <Typography
-              contentEditable={aboutEditable}
-              suppressContentEditableWarning={true}
-              onInput={handleAboutChange}
-              onBlur={handleAboutSubmit}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  event.preventDefault();
-                  handleAboutSubmit(event);
-                }
-              }}
-              flexGrow={1}
-            >
-              {profileUser?.about}
-            </Typography>
-          ) : (
-            <span style={{ fontStyle: 'italic', color: 'grey' }}>
-              Write something about yourself
-            </span>
-          )}
-        </div>
-      </Box>
+
+      <AboutSection
+        id={id}
+        profileUser={profileUser}
+        setProfileUser={setProfileUser}
+        aboutContent={aboutContent}
+        setAboutContent={aboutContent}
+      />
+
       <Box className="user-profile-other-info">
         <div style={{ padding: '1rem' }}>
           <div
