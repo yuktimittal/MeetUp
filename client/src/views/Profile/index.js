@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography, IconButton } from '@mui/material';
+import { Avatar, Box, IconButton } from '@mui/material';
 import './index.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -7,11 +7,14 @@ import { getUserById } from 'services/UserServices';
 import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
 import UpdateProfilePictureModal from './UpdateProfilePictureModal';
 import AboutSection from './AboutSection';
+import DetailedProfile from './DetailedProfile';
 
 const Profile = () => {
   const { id } = useParams();
   const [profileUser, setProfileUser] = useState();
+  const user = JSON.parse(localStorage.getItem('user'));
 
+  const [editingAllowed, setEditingAllowed] = useState(false);
   const [aboutContent, setAboutContent] = useState();
   const [profilePic, setProfilePic] = useState();
   const [openUpdateProfileModal, setOpenUpdateProfileModal] = useState(false);
@@ -19,7 +22,10 @@ const Profile = () => {
   useEffect(() => {
     getUserById(id, setProfileUser);
     setAboutContent(profileUser?.about);
-  }, []);
+    if (user && user?.id === id) {
+      setEditingAllowed(true);
+    } else setEditingAllowed(false);
+  }, [id]);
 
   const updateProfilePicture = (pic) => {
     if (pic === undefined) {
@@ -66,31 +72,36 @@ const Profile = () => {
             sx={{ width: 112, height: 112 }}
             src={profileUser?.profilePicture}
           ></Avatar>
-          <input
-            accept="image/*"
-            style={{ display: 'none' }}
-            id="icon-button-file"
-            type="file"
-            onChange={(e) => updateProfilePicture(e.target.files[0])}
-          />
-          <label htmlFor="icon-button-file">
-            <IconButton
-              component="span"
-              sx={{
-                right: '2rem',
-                top: '4rem',
-                '&:hover ': { backgroundColor: 'transparent' },
-              }}
-            >
-              <AddAPhotoOutlinedIcon
-                type
-                sx={{
-                  fontSize: '1.8rem',
-                  color: 'primary',
-                }}
+          {editingAllowed && (
+            <>
+              <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="icon-button-file"
+                type="file"
+                onChange={(e) => updateProfilePicture(e.target.files[0])}
               />
-            </IconButton>
-          </label>
+              <label htmlFor="icon-button-file" style={{ width: 0 }}>
+                <IconButton
+                  component="span"
+                  sx={{
+                    right: '2rem',
+                    top: '4rem',
+                    '&:hover ': { backgroundColor: 'transparent' },
+                  }}
+                >
+                  <AddAPhotoOutlinedIcon
+                    type
+                    sx={{
+                      fontSize: '1.8rem',
+                      color: 'primary',
+                    }}
+                  />
+                </IconButton>
+              </label>
+            </>
+          )}
+
           <div style={{ marginTop: '1rem' }}>
             <p className="profile-name">{profileUser?.name}</p>
             <p className="profile-name">{profileUser?.email}</p>
@@ -104,21 +115,15 @@ const Profile = () => {
         setProfileUser={setProfileUser}
         aboutContent={aboutContent}
         setAboutContent={aboutContent}
+        editingAllowed={editingAllowed}
       />
 
-      <Box className="user-profile-other-info">
-        <div style={{ padding: '1rem' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              marginBottom: '0.5rem',
-            }}
-          >
-            <Typography sx={{ fontWeight: 600 }}>Other Info</Typography>
-          </div>
-        </div>
-      </Box>
+      <DetailedProfile
+        id={id}
+        editingAllowed={editingAllowed}
+        profileUser={profileUser}
+        setProfileUser={setProfileUser}
+      />
     </div>
   );
 };

@@ -18,7 +18,7 @@
 }
 .profile-name{
     color: #fff;
-    margin-left: -1rem;
+    margin-left: 1rem;
     
 }
 
@@ -32,4 +32,14 @@
     border: 1px solid #bbbaba;
     border-radius: 0.4rem;
     margin: 0.3rem;
+}
+
+.detailed-profile-fields{
+    padding: 0 !important;
+    min-height: 1rem !important;
+    margin-bottom: 1rem;
+}
+.detailed-profile-field-label{
+    margin-right: 1rem !important;
+    color: #676666
 }
