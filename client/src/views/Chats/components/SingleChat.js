@@ -32,6 +32,7 @@ const SingleChat = ({
   chat,
   chatName,
   profilePicture,
+  senderId,
   setChatList,
 }) => {
   const { user, notifications, setNotifications } = useContext(AppContext);
@@ -145,6 +146,7 @@ const SingleChat = ({
           chat={chat}
           chatName={chatName}
           profilePicture={profilePicture}
+          senderId={senderId}
           openChatInfo={openChatInfo}
           setOpenChatInfo={setOpenChatInfo}
           setChatList={setChatList}

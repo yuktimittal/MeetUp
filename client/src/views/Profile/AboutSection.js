@@ -9,6 +9,7 @@ const AboutSection = ({
   setProfileUser,
   aboutContent,
   setAboutContent,
+  editingAllowed,
 }) => {
   const [aboutEditable, setAboutEditable] = useState(false);
 
@@ -37,7 +38,7 @@ const AboutSection = ({
           }}
         >
           <Typography sx={{ fontWeight: 600 }}>About Me</Typography>
-          {!aboutEditable && (
+          {!aboutEditable && editingAllowed && (
             <IconButton onClick={handleEditing}>
               <ModeEditIcon />
             </IconButton>
@@ -61,7 +62,9 @@ const AboutSection = ({
           </Typography>
         ) : (
           <span style={{ fontStyle: 'italic', color: 'grey' }}>
-            Write something about yourself
+            {editingAllowed
+              ? `Write something about yourself`
+              : `Not Available`}
           </span>
         )}
       </div>
