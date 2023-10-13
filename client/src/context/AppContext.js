@@ -8,6 +8,7 @@ const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [notifications, setNotifications] = useState([]);
   const [selectedChat, setSelectedChat] = useState('');
+  const [eventsList, setEventsList] = useState([]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('user'));
@@ -27,6 +28,8 @@ const AppContextProvider = ({ children }) => {
         setNotifications,
         selectedChat,
         setSelectedChat,
+        eventsList,
+        setEventsList,
       }}
     >
       {children}

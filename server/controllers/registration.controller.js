@@ -3,18 +3,19 @@ import User from '../models/User.js';
 import Event from '../models/Event.js';
 
 export const registerForEvent = async (req, res) => {
-  const { event_id, user_id } = req.body;
+  const { eventId } = req.body;
+  const userId = req.userId;
 
   let existing_registration = await Registration.findOne({
-    user: user_id,
-    event: event_id,
+    user: userId,
+    event: eventId,
   });
   if (existing_registration) {
     return res.status(400).send('Already Registered!');
   }
 
-  let user = await User.findById(user_id);
-  let event = await Event.findById(event_id);
+  let user = await User.findById(userId);
+  let event = await Event.findById(eventId);
   if (user && event) {
     const registration = new Registration({
       event: event._id,

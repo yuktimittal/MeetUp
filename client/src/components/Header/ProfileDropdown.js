@@ -50,7 +50,12 @@ const ProfileDropdown = ({ open, handleClose, anchorEl }) => {
             {user?.name}
           </Typography>
           <hr />
-          <MenuItem>View Profile</MenuItem>
+          <Link
+            to={'/profile/' + user.id}
+            style={{ textDecoration: 'none', color: '#000' }}
+          >
+            <MenuItem>View Profile</MenuItem>
+          </Link>
 
           <MenuItem onClick={() => signOut(setUser, navigate)}>
             <ListItemIcon>

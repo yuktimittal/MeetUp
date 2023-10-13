@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { renameGroup } from 'services/ChatServices';
+import { Link } from 'react-router-dom';
 
 const style = {
   position: 'absolute',
@@ -27,6 +28,7 @@ const ChatInfo = ({
   chat,
   chatName,
   profilePicture,
+  senderId,
   openChatInfo,
   setOpenChatInfo,
   setChatList,
@@ -77,7 +79,7 @@ const ChatInfo = ({
           </Typography>
         </div>
 
-        <Box className={!chat?.isGroupChat ? 'test-avatar' : null}>
+        <Box>
           {chat?.isGroupChat ? (
             <>
               <div
@@ -117,14 +119,25 @@ const ChatInfo = ({
               </div>
             </>
           ) : (
-            <Avatar
-              sx={{
-                width: 100,
-                height: 100,
-              }}
-              src={profilePicture}
-              alt=""
-            ></Avatar>
+            <>
+              <Box className="test-avatar">
+                <Avatar
+                  sx={{
+                    width: 100,
+                    height: 100,
+                  }}
+                  className="test-avata"
+                  src={profilePicture}
+                  alt=""
+                ></Avatar>
+              </Box>
+              <Link
+                className="chat-info-view-profile"
+                to={`/profile/${senderId}`}
+              >
+                View Profile
+              </Link>
+            </>
           )}
         </Box>
       </Box>

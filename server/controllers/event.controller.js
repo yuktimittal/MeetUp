@@ -1,8 +1,11 @@
 import Event from '../models/Event.js';
+import asyncHandler from 'express-async-handler';
 
 export const getAllEvents = async (req, res) => {
   try {
-    const events = await Event.find();
+    const events = await Event.find()
+      .sort({ createdAt: -1 })
+      .populate('registrations');
     return res.status(200).send(events);
   } catch (err) {
     console.log(err);
@@ -59,22 +62,23 @@ export const deleteEventById = (req, res) => {
   });
 };
 
-export const addNewEvent = (req, res) => {
+export const addNewEvent = asyncHandler(async (req, res) => {
   const new_event = {
     name: req.body.name,
     eventMode: req.body.eventMode,
     eventType: req.body.eventType,
-    createdOn: req.body.createdOn,
     description: req.body.description,
-    // profilePicture: req.body.profilePicture,
     eventDate: req.body.eventDate,
+    eventTime: req.body.eventTime,
     location: req.body.location,
-    // preferences
+    createdBy: req.userId,
+    picture: req.body.picture,
   };
 
-  const event = new Event(new_event);
-  event
-    .save()
-    .then(() => res.json('Event added sucessfully'))
-    .catch((err) => res.status(400).json('Error: ', err));
-};
+  const event = await Event.create(new_event);
+  const createdEvent = await Event.findOne({
+    _id: event._id,
+  }).populate('createdBy', '-password');
+
+  res.status(200).send(createdEvent);
+});

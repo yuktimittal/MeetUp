@@ -39,6 +39,13 @@
     justify-content: center;
     margin-top: 1rem;
 }
+.chat-info-view-profile{
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    text-decoration: none;
+    color: '#f44336';
+}
 .side-drawer-heading{
     margin-top: 0.3rem !important;
     padding: 0.5rem 1rem;
