@@ -37,20 +37,40 @@ const EventCard = ({
   };
 
   return (
-    <Card sx={{ width: 300, cursor: 'pointer' }} onClick={handleEventClick}>
+    <Card sx={{ width: 300 }}>
       <CardHeader
         title={eventTitle}
         subheader={date}
         className="event-card-header"
+        sx={{
+          backgroundColor: '#E9EB9E',
+          '& .MuiCardHeader-title': {
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            width: '95% !important',
+          },
+        }}
       />
       <CardMedia
+        onClick={handleEventClick}
+        sx={{ cursor: 'pointer' }}
         component="img"
         height="194"
         image={picture ? picture : defaultPicture}
         alt="Trek"
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          style={{
+            width: '100%',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
           {eventDescription}
         </Typography>
       </CardContent>
