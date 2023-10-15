@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import EventCard from './EventCard';
 import './index.css';
@@ -7,11 +7,16 @@ import { WELCOME_MSG, WELCOME_TEXT } from './constants';
 import { getAllEvents } from 'services/EventServices.js';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from 'context/AppContext';
+import EventDrawer from './EventDrawer';
 
 const Events = () => {
   const { eventsList, setEventsList } = useContext(AppContext);
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem('user'));
+
+  const [openEventDrawer, setOpenEventDrawer] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState();
+  const [selectedEvent, setSelectedEvent] = useState();
 
   useEffect(() => {
     if (userInfo) {
@@ -32,12 +37,18 @@ const Events = () => {
     return false;
   };
 
+  useEffect(() => {
+    let foundEvent = eventsList.find((event) => event?._id === selectedEventId);
+    setSelectedEvent(foundEvent);
+  }, [selectedEventId]);
+
   return (
     <div className="home-page">
       <div className="bg-image">
         <div className="welcome-text">{WELCOME_TEXT}</div>
         <h3 className="welcome-text1">{WELCOME_MSG}</h3>
       </div>
+
       <Grid
         item
         container
@@ -57,10 +68,18 @@ const Events = () => {
                 eventDescription={event?.description}
                 picture={event?.picture}
                 isUserRegistered={checkRegistration(event)}
+                setSelectedEventId={setSelectedEventId}
+                setOpenEventDrawer={setOpenEventDrawer}
               />
             </Grid>
           ))}
       </Grid>
+      <EventDrawer
+        key={selectedEventId}
+        selectedEvent={selectedEvent}
+        openEventDrawer={openEventDrawer}
+        setOpenEventDrawer={setOpenEventDrawer}
+      />
     </div>
   );
 };

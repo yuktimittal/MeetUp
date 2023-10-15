@@ -23,14 +23,21 @@ const EventCard = ({
   eventDescription,
   picture,
   isUserRegistered,
+  setSelectedEventId,
+  setOpenEventDrawer,
 }) => {
   const { setEventList } = useContext(AppContext);
   const handleRegister = () => {
     console.log(eventId);
     registerForEvent(eventId, setEventList);
   };
+  const handleEventClick = () => {
+    setOpenEventDrawer(true);
+    setSelectedEventId(eventId);
+  };
+
   return (
-    <Card sx={{ width: 300 }}>
+    <Card sx={{ width: 300, cursor: 'pointer' }} onClick={handleEventClick}>
       <CardHeader
         title={eventTitle}
         subheader={date}
