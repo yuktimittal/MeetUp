@@ -8,6 +8,7 @@ import { getAllEvents } from 'services/EventServices.js';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from 'context/AppContext';
 import EventDrawer from './EventDrawer';
+import RegistrationConfirmationModal from './components/RegistrationConfirmationModal';
 
 const Events = () => {
   const { eventsList, setEventsList } = useContext(AppContext);
@@ -17,6 +18,7 @@ const Events = () => {
   const [openEventDrawer, setOpenEventDrawer] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState();
   const [selectedEvent, setSelectedEvent] = useState();
+  const [openRegistrationModal, setOpenRegistrationModal] = useState(false);
 
   useEffect(() => {
     if (userInfo) {
@@ -79,6 +81,11 @@ const Events = () => {
         selectedEvent={selectedEvent}
         openEventDrawer={openEventDrawer}
         setOpenEventDrawer={setOpenEventDrawer}
+        setOpenRegistrationModal={setOpenRegistrationModal}
+      />
+      <RegistrationConfirmationModal
+        openRegistrationModal={openRegistrationModal}
+        setOpenRegistrationModal={setOpenRegistrationModal}
       />
     </div>
   );

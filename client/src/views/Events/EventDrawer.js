@@ -1,16 +1,25 @@
 import * as React from 'react';
-import { Box, Button, Divider, Drawer, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Drawer,
+  Typography,
+  IconButton,
+} from '@mui/material';
 import dayjs from 'dayjs';
 import defaultPicture from 'assets/images/bg.jpg';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 import EventBasicDetailComponent from './components/EventBasicDetailComponent';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const EventDrawer = ({
   selectedEvent,
   openEventDrawer,
   setOpenEventDrawer,
+  setOpenRegistrationModal,
 }) => {
   const toggleDrawer = (state) => (event) => {
     if (
@@ -21,19 +30,26 @@ const EventDrawer = ({
     }
     setOpenEventDrawer(state);
   };
+  const handleEventRegistration = () => {
+    setOpenRegistrationModal(true);
+  };
 
   const drawerContent = () => (
-    <Box
-      sx={{ width: 500 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <img
-        style={{ height: 400, width: 500 }}
-        src={selectedEvent?.picture ? selectedEvent?.picture : defaultPicture}
-        alt=""
-      />
+    <Box sx={{ width: 500 }} role="presentation">
+      <div style={{ position: 'relative' }}>
+        <IconButton
+          onClick={toggleDrawer(false)}
+          style={{ float: 'right', position: 'absolute' }}
+        >
+          <CancelIcon />
+        </IconButton>
+        <img
+          style={{ height: 400, width: 500 }}
+          src={selectedEvent?.picture ? selectedEvent?.picture : defaultPicture}
+          alt=""
+        />
+      </div>
+
       <Typography variant="h5" style={{ textAlign: 'center' }}>
         {selectedEvent?.name}
       </Typography>
@@ -48,7 +64,11 @@ const EventDrawer = ({
           justifyContent: 'center',
         }}
       >
-        <Button color="primary" variant="contained">
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={handleEventRegistration}
+        >
           Register
         </Button>
         <Button
@@ -101,8 +121,6 @@ const EventDrawer = ({
         Venue
       </Typography>
       <Typography sx={{ paddingLeft: '1rem' }}>{'lorem ipsum '}</Typography>
-
-      <div></div>
     </Box>
   );
 
