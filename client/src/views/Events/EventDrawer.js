@@ -20,6 +20,7 @@ const EventDrawer = ({
   openEventDrawer,
   setOpenEventDrawer,
   setOpenRegistrationModal,
+  isUserRegistered,
 }) => {
   const toggleDrawer = (state) => (event) => {
     if (
@@ -68,8 +69,9 @@ const EventDrawer = ({
           color="primary"
           variant="contained"
           onClick={handleEventRegistration}
+          disabled={isUserRegistered}
         >
-          Register
+          {!isUserRegistered ? 'Register' : 'Registered'}
         </Button>
         <Button
           color="primary"

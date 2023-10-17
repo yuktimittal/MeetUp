@@ -17,15 +17,20 @@ const style = {
 const RegistrationConfirmationModal = ({
   openRegistrationModal,
   setOpenRegistrationModal,
+  selectedEvent,
+  handleRegister,
 }) => {
   const handleClose = () => {
     setOpenRegistrationModal(false);
+  };
+  const handleConfirmation = () => {
+    handleRegister(selectedEvent?._id);
   };
   return (
     <Modal open={openRegistrationModal} onClose={handleClose}>
       <Box sx={style}>
         <Typography>
-          Are you sure you want to register for this event?
+          Are you sure you want to register for {selectedEvent?.name}?
         </Typography>
         <Box sx={{ marginTop: '1rem', textAlign: 'center' }}>
           <Button
@@ -36,7 +41,9 @@ const RegistrationConfirmationModal = ({
           >
             Cancel
           </Button>
-          <Button variant="contained">Confirm</Button>
+          <Button variant="contained" onClick={handleConfirmation}>
+            Confirm
+          </Button>
         </Box>
       </Box>
     </Modal>

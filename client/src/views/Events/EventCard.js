@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
   Card,
   CardHeader,
@@ -13,8 +13,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import defaultPicture from 'assets/images/bg.jpg';
-import { registerForEvent } from 'services/EventServices';
-import { AppContext } from 'context/AppContext';
 
 const EventCard = ({
   eventId,
@@ -25,11 +23,11 @@ const EventCard = ({
   isUserRegistered,
   setSelectedEventId,
   setOpenEventDrawer,
+  setOpenRegistrationModal,
 }) => {
-  const { setEventList } = useContext(AppContext);
   const handleRegister = () => {
-    console.log(eventId);
-    registerForEvent(eventId, setEventList);
+    setOpenRegistrationModal(true);
+    setSelectedEventId(eventId);
   };
   const handleEventClick = () => {
     setOpenEventDrawer(true);
@@ -88,9 +86,10 @@ const EventCard = ({
               aria-label="register"
               size="large"
               onClick={handleRegister}
+              disabled={isUserRegistered}
             >
               {isUserRegistered ? (
-                <HowToRegIcon style={{ color: 'teal' }} />
+                <HowToRegIcon style={{ color: 'green' }} />
               ) : (
                 <HowToRegIcon />
               )}
