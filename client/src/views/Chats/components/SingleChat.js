@@ -139,6 +139,12 @@ const SingleChat = ({
       }
     }, timerLength);
   };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
   return (
     selectedChat && (
       <div>
@@ -210,6 +216,7 @@ const SingleChat = ({
             <TextField
               label="Type a message"
               value={newMessage}
+              onKeyDown={handleKeyDown}
               onChange={typingHandler}
               fullWidth
             />
