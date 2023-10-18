@@ -5,7 +5,7 @@ import './index.css';
 import Grid from '@mui/material/Grid';
 import { Alert, Snackbar } from '@mui/material';
 import { WELCOME_MSG, WELCOME_TEXT } from './constants';
-import { getAllEvents } from 'services/EventServices.js';
+import { getAllEvents, toggleEventInterest } from 'services/EventServices.js';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from 'context/AppContext';
 import EventDrawer from './EventDrawer';
@@ -52,11 +52,24 @@ const Events = () => {
     }
     return false;
   };
+  const checkInterest = (event) => {
+    const insterestedUser = event?.interests?.find(
+      (interest) => interest.user === userInfo?.id
+    );
+    if (insterestedUser) {
+      return true;
+    }
+    return false;
+  };
 
   useEffect(() => {
     let foundEvent = eventsList.find((event) => event?._id === selectedEventId);
     setSelectedEvent(foundEvent);
   }, [selectedEventId]);
+
+  const toggleInterest = (eventId) => {
+    toggleEventInterest(eventId, setEventsList);
+  };
 
   return (
     <div className="home-page">
@@ -97,9 +110,11 @@ const Events = () => {
                 eventDescription={event?.description}
                 picture={event?.picture}
                 isUserRegistered={checkRegistration(event)}
+                isUserInterested={checkInterest(event)}
                 setSelectedEventId={setSelectedEventId}
                 setOpenEventDrawer={setOpenEventDrawer}
                 setOpenRegistrationModal={setOpenRegistrationModal}
+                toggleInterest={toggleInterest}
               />
             </Grid>
           ))}

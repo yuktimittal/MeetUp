@@ -73,13 +73,6 @@ const EventDrawer = ({
         >
           {!isUserRegistered ? 'Register' : 'Registered'}
         </Button>
-        <Button
-          color="primary"
-          variant="outlined"
-          style={{ marginLeft: '1rem' }}
-        >
-          Mark Interested
-        </Button>
       </Box>
       <Box
         style={{

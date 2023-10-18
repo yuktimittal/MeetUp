@@ -21,9 +21,11 @@ const EventCard = ({
   eventDescription,
   picture,
   isUserRegistered,
+  isUserInterested,
   setSelectedEventId,
   setOpenEventDrawer,
   setOpenRegistrationModal,
+  toggleInterest,
 }) => {
   const handleRegister = () => {
     setOpenRegistrationModal(true);
@@ -32,6 +34,10 @@ const EventCard = ({
   const handleEventClick = () => {
     setOpenEventDrawer(true);
     setSelectedEventId(eventId);
+  };
+
+  const handleInterest = () => {
+    toggleInterest(eventId);
   };
 
   return (
@@ -100,8 +106,16 @@ const EventCard = ({
           </IconButton>
         </div>
         <div>
-          <IconButton aria-label="add to favorites" size="large">
-            <FavoriteIcon />
+          <IconButton
+            aria-label="add to favorites"
+            size="large"
+            onClick={handleInterest}
+          >
+            {isUserInterested ? (
+              <FavoriteIcon style={{ color: '#E60000' }} />
+            ) : (
+              <FavoriteIcon />
+            )}
           </IconButton>
         </div>
       </CardActions>
