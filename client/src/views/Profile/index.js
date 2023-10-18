@@ -114,7 +114,7 @@ const Profile = () => {
         profileUser={profileUser}
         setProfileUser={setProfileUser}
         aboutContent={aboutContent}
-        setAboutContent={aboutContent}
+        setAboutContent={setAboutContent}
         editingAllowed={editingAllowed}
       />
 

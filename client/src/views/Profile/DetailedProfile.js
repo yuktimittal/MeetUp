@@ -49,7 +49,6 @@ const DetailedProfile = ({
     setGender(profileUser?.gender);
     setDob(profileUser?.dob);
   };
-  console.log(contact, gender, dob);
 
   const handleProfileSubmit = () => {
     const userDetails = { contact: contact, gender: gender, dob: dob };
