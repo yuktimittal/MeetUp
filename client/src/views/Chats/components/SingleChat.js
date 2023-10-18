@@ -194,19 +194,19 @@ const SingleChat = ({
             ))}
           <div ref={messagesEndRef} />
         </List>
+        {isTyping ? (
+          <div>
+            <Lottie
+              options={defaultOptions}
+              width={70}
+              style={{ marginBottom: 15, marginLeft: 0 }}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
         <Grid container style={{ padding: '20px' }}>
           <Grid item xs={11}>
-            {isTyping ? (
-              <div>
-                <Lottie
-                  options={defaultOptions}
-                  width={70}
-                  style={{ marginBottom: 15, marginLeft: 0 }}
-                />
-              </div>
-            ) : (
-              <></>
-            )}
             <TextField
               label="Type a message"
               value={newMessage}
