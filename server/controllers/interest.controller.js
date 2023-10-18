@@ -1,6 +1,7 @@
 import Interest from '../models/Interest.js';
 import User from '../models/User.js';
 import Event from '../models/Event.js';
+import asyncHandler from 'express-async-handler';
 
 export const interestInEvent = async (req, res) => {
   const { event_id, user_id } = req.body;
@@ -29,6 +30,42 @@ export const interestInEvent = async (req, res) => {
   }
   return res.status(400).send('User or Event not found!');
 };
+
+export const toggleInterest = asyncHandler(async (req, res) => {
+  const { eventId } = req.body;
+  const userId = req.userId;
+
+  let existing_interest = await Interest.findOne({
+    user: userId,
+    event: eventId,
+  });
+  let user = await User.findById(userId);
+  let event = await Event.findById(eventId);
+  if (existing_interest) {
+    user.interests.pull(existing_interest._id);
+    await user.save();
+
+    event.interests.pull(existing_interest._id);
+    await event.save();
+
+    await Interest.deleteOne({ _id: existing_interest._id });
+    return res.status(200).send('Removed interest');
+  }
+
+  if (user && event) {
+    const interest = new Interest({
+      event: event._id,
+      user: user._id,
+    });
+    interest.save();
+    user.interests.push(interest);
+    await user.save();
+    event.interests.push(interest);
+    await event.save();
+    return res.status(200).send(event);
+  }
+  return res.status(400).send('User or Event not found!');
+});
 
 export const getAllInterests = async (req, res) => {
   try {

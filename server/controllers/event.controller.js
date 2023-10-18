@@ -5,7 +5,8 @@ export const getAllEvents = async (req, res) => {
   try {
     const events = await Event.find()
       .sort({ createdAt: -1 })
-      .populate('registrations');
+      .populate('registrations')
+      .populate('interests');
     return res.status(200).send(events);
   } catch (err) {
     console.log(err);
