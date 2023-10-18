@@ -35,10 +35,8 @@ import { APP_NAME_MULAKAAT } from 'constants';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [userDetails, setUserDetails] = useState({
-    email: '',
-    password: '',
-  });
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const [isSignedUp, setIsSignedUp] = useState({
     successful: false,
     message: null,
@@ -46,7 +44,8 @@ const Login = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleChange = (value, field) => {
-    setUserDetails({ ...userDetails, [field]: value });
+    if (field === LOGIN_KEYS.EMAIL) setUserEmail(value);
+    else setUserPassword(value);
   };
 
   const handleClickShowPassword = () => {
@@ -55,7 +54,7 @@ const Login = () => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-
+    const userDetails = { email: userEmail, password: userPassword };
     await axios
       .post('/auth/signin', userDetails)
       .then((res) => {
@@ -66,6 +65,8 @@ const Login = () => {
         if (res.data.accessToken) {
           localStorage.setItem(USER, JSON.stringify(res.data));
         }
+        setUserEmail('');
+        setUserPassword('');
       })
       .catch((err) => {
         setIsSignedUp({
@@ -74,8 +75,6 @@ const Login = () => {
         });
       });
     setShowAlert(true);
-
-    setUserDetails({ email: null, password: null });
   };
 
   if (isSignedUp?.successful) {
@@ -152,7 +151,7 @@ const Login = () => {
               <TextField
                 label={LOGIN_INPUT_LABELS.EMAIL}
                 fullWidth
-                value={userDetails?.email}
+                value={userEmail}
                 onChange={(e) => handleChange(e.target.value, LOGIN_KEYS.EMAIL)}
               />
 
@@ -167,7 +166,7 @@ const Login = () => {
                 <OutlinedInput
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
-                  value={userDetails?.password}
+                  value={userPassword}
                   onChange={(e) =>
                     handleChange(e.target.value, LOGIN_KEYS.PASSWORD)
                   }
