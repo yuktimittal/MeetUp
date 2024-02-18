@@ -57,7 +57,11 @@ const SingleChat = ({
     if (user) {
       socket.emit('setup', user);
       socket.on('connected', () => setSocketConnected(true));
-      socket.on('typing', () => setIsTyping(true));
+      socket.on('typing', (userId) => {
+        if (user?.id !== userId) {
+          setIsTyping(true)
+        }
+      });
       socket.on('stop typing', () => setIsTyping(false));
     }
   }, [user]);
@@ -124,7 +128,7 @@ const SingleChat = ({
     if (!socketConnected) return;
     if (!typing) {
       setTyping(true);
-      socket.emit('typing', selectedChat);
+      socket.emit('typing', { room: selectedChat, userId: user?.id });
     }
 
     let lastTypingTime = new Date().getTime();
@@ -138,6 +142,12 @@ const SingleChat = ({
         setTyping(false);
       }
     }, timerLength);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
   };
   return (
     selectedChat && (
@@ -194,22 +204,23 @@ const SingleChat = ({
             ))}
           <div ref={messagesEndRef} />
         </List>
+        {isTyping ? (
+          <div>
+            <Lottie
+              options={defaultOptions}
+              width={70}
+              style={{ marginBottom: 15, marginLeft: 0 }}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
         <Grid container style={{ padding: '20px' }}>
           <Grid item xs={11}>
-            {isTyping ? (
-              <div>
-                <Lottie
-                  options={defaultOptions}
-                  width={70}
-                  style={{ marginBottom: 15, marginLeft: 0 }}
-                />
-              </div>
-            ) : (
-              <></>
-            )}
             <TextField
               label="Type a message"
               value={newMessage}
+              onKeyDown={handleKeyDown}
               onChange={typingHandler}
               fullWidth
             />

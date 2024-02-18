@@ -49,7 +49,6 @@ const DetailedProfile = ({
     setGender(profileUser?.gender);
     setDob(profileUser?.dob);
   };
-  console.log(contact, gender, dob);
 
   const handleProfileSubmit = () => {
     const userDetails = { contact: contact, gender: gender, dob: dob };
@@ -148,13 +147,14 @@ const DetailedProfile = ({
           <>
             <Button
               variant="outlined"
-              onClick={handleProfileSubmit}
+              color="error"
+              onClick={cancelSubmit}
               style={{ marginRight: '1rem' }}
             >
-              Submit
-            </Button>
-            <Button variant="outlined" color="error" onClick={cancelSubmit}>
               Cancel
+            </Button>
+            <Button variant="contained" onClick={handleProfileSubmit}>
+              Submit
             </Button>
           </>
         )}

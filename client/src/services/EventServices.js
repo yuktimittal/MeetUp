@@ -40,11 +40,24 @@ export const createEvent = async (
 };
 
 export const registerForEvent = async (eventId, setEventList) => {
-  await axios
+  return await axios
     .post('/register', { eventId: eventId }, { headers: authHeader() })
     .then((res) => {
-      console.log(res);
+      getAllEvents(setEventList);
+      return { success: true, message: null };
+    })
+    .catch((err) => {
+      return { success: false, message: err.response.data };
+    });
+};
+
+export const toggleEventInterest = async (eventId, setEventList) => {
+  await axios
+    .post('/interest', { eventId: eventId }, { headers: authHeader() })
+    .then((res) => {
       getAllEvents(setEventList);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log('Something went wrong');
+    });
 };
