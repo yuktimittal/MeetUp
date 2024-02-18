@@ -57,7 +57,11 @@ const SingleChat = ({
     if (user) {
       socket.emit('setup', user);
       socket.on('connected', () => setSocketConnected(true));
-      socket.on('typing', () => setIsTyping(true));
+      socket.on('typing', (userId) => {
+        if (user?.id !== userId) {
+          setIsTyping(true)
+        }
+      });
       socket.on('stop typing', () => setIsTyping(false));
     }
   }, [user]);
@@ -124,7 +128,7 @@ const SingleChat = ({
     if (!socketConnected) return;
     if (!typing) {
       setTyping(true);
-      socket.emit('typing', selectedChat);
+      socket.emit('typing', { room: selectedChat, userId: user?.id });
     }
 
     let lastTypingTime = new Date().getTime();
