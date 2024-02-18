@@ -3,7 +3,10 @@ import asyncHandler from 'express-async-handler';
 
 export const getAllEvents = async (req, res) => {
   try {
+    const today = moment(); // Keep today is a moment object
+
     const events = await Event.find()
+      .filter((event) => moment(event.eventDate).isSameOrAfter(today))
       .sort({ createdAt: -1 })
       .populate('registrations')
       .populate('interests');
