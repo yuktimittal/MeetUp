@@ -80,6 +80,11 @@ const Login = () => {
   if (isSignedUp?.successful) {
     return <Navigate to="/events" />;
   }
+  const handleLoginEnter = (e) => {
+    if (e.key === 'Enter') {
+      handleSignUp(e);
+    }
+  };
 
   return (
     <>
@@ -167,6 +172,7 @@ const Login = () => {
                   id="outlined-adornment-password"
                   type={showPassword ? 'text' : 'password'}
                   value={userPassword}
+                  onKeyDown={(e)=>handleLoginEnter(e)}
                   onChange={(e) =>
                     handleChange(e.target.value, LOGIN_KEYS.PASSWORD)
                   }
