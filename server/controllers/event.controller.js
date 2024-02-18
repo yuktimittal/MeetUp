@@ -1,12 +1,13 @@
 import Event from '../models/Event.js';
 import asyncHandler from 'express-async-handler';
+import moment from 'moment';
 
 export const getAllEvents = async (req, res) => {
   try {
     const today = moment(); // Keep today is a moment object
+    var upcoming_event_filter = {"eventDate": { $gte: today }}; 
 
-    const events = await Event.find()
-      .filter((event) => moment(event.eventDate).isSameOrAfter(today))
+    const events = await Event.find(upcoming_event_filter)
       .sort({ createdAt: -1 })
       .populate('registrations')
       .populate('interests');
