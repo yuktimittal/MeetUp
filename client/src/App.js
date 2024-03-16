@@ -7,6 +7,9 @@ import { AppContextProvider } from 'context/AppContext';
 
 function App() {
   const theme = createTheme({
+    typography: {
+      "fontFamily": `"Roboto", "Helvetica", "Arial", sans-serif`,
+    },
     palette: {
       primary: {
         main: teal[300],
