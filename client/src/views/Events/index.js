@@ -126,6 +126,8 @@ const Events = () => {
         setOpenEventDrawer={setOpenEventDrawer}
         setOpenRegistrationModal={setOpenRegistrationModal}
         isUserRegistered={checkRegistration(selectedEvent)}
+        toggleInterest={toggleInterest}
+        isUserInterested={checkInterest(selectedEvent)}
       />
       <RegistrationConfirmationModal
         openRegistrationModal={openRegistrationModal}
