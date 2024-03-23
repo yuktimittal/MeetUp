@@ -1,11 +1,20 @@
-import axios from 'axios';
-import { authHeader } from 'login/services';
+import axios from "axios";
+import { authHeader } from "login/services";
 
 export const getAllEvents = async (setEventsList) => {
   await axios
-    .get('/event', { headers: authHeader() })
+    .get("/event", { headers: authHeader() })
     .then((res) => {
       setEventsList(res.data);
+    })
+    .catch((err) => console.log(err));
+};
+
+export const geteventById = async (id, setSelectedEvent) => {
+  await axios
+    .get(`/event/getById/${id}`, { headers: authHeader() })
+    .then((res) => {
+      setSelectedEvent(res.data);
     })
     .catch((err) => console.log(err));
 };
@@ -21,7 +30,7 @@ export const createEvent = async (
 ) => {
   await axios
     .post(
-      '/event',
+      "/event",
       {
         name: name,
         description: description,
@@ -39,11 +48,11 @@ export const createEvent = async (
     .catch((err) => console.log(err));
 };
 
-export const registerForEvent = async (eventId, setEventList) => {
+export const registerForEvent = async (eventId) => {
   return await axios
-    .post('/register', { eventId: eventId }, { headers: authHeader() })
+    .post("/register", { eventId: eventId }, { headers: authHeader() })
     .then((res) => {
-      getAllEvents(setEventList);
+      // getAllEvents(setEventList);
       return { success: true, message: null };
     })
     .catch((err) => {
@@ -51,13 +60,13 @@ export const registerForEvent = async (eventId, setEventList) => {
     });
 };
 
-export const toggleEventInterest = async (eventId, setEventList) => {
+export const toggleEventInterest = async (eventId) => {
   await axios
-    .post('/interest', { eventId: eventId }, { headers: authHeader() })
+    .post("/interest", { eventId: eventId }, { headers: authHeader() })
     .then((res) => {
-      getAllEvents(setEventList);
+      console.log("interest given");
     })
     .catch((err) => {
-      console.log('Something went wrong');
+      console.log("Something went wrong");
     });
 };
