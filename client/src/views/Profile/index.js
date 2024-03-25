@@ -1,7 +1,7 @@
 import { Avatar, Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
 
 import "./index.css";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getUserById } from "services/UserServices";
 
@@ -16,15 +16,19 @@ const Profile = () => {
   const { id } = useParams();
   const [profileUser, setProfileUser] = useState();
   const user = JSON.parse(localStorage.getItem("user"));
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [editingAllowed, setEditingAllowed] = useState(false);
   const [aboutContent, setAboutContent] = useState();
   const [profilePic, setProfilePic] = useState();
   const [openUpdateProfileModal, setOpenUpdateProfileModal] = useState(false);
-  const [selectedTab, setSelectedTab] = useState(1);
+  const [selectedTab, setSelectedTab] = useState(
+    searchParams.get("tab") || "about"
+  );
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
+    setSearchParams({ ["tab"]: newValue });
   };
 
   useEffect(() => {
@@ -128,15 +132,17 @@ const Profile = () => {
           <Tabs value={selectedTab} onChange={handleTabChange} centered>
             <Tab
               label={editingAllowed ? "Edit Profile" : "View Profile"}
-              value={1}
+              value={"about"}
             />
-            {editingAllowed && <Tab label="Registered Events" value={2} />}
+            {editingAllowed && (
+              <Tab label="Registered Events" value={"events"} />
+            )}
           </Tabs>
         </Box>
 
         <CustomTabPanel
           selectedTab={selectedTab}
-          index={1}
+          index={"about"}
           content={
             <>
               <AboutSection
@@ -159,7 +165,7 @@ const Profile = () => {
         />
         <CustomTabPanel
           selectedTab={selectedTab}
-          index={2}
+          index={"events"}
           content={
             profileUser?.registrations?.length > 0 ? (
               <Box>

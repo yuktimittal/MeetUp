@@ -1,11 +1,12 @@
+import React from "react";
 import {
   Card,
   Box,
   CardMedia,
   CardContent,
   Typography,
-} from "@material-ui/core";
-import { Button } from "@mui/material";
+  Button,
+} from "@mui/material";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 
@@ -57,9 +58,7 @@ const MyEventCard = ({
             <Typography component="div" variant="h5">
               {eventName}
             </Typography>
-            <Typography variant="subtitle1" color="text.secondary">
-              {eventCity}
-            </Typography>
+            <Typography variant="subtitle1">{eventCity}</Typography>
           </CardContent>
         </Box>
 
