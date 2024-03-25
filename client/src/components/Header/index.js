@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import drinks from 'assets/images/drinks.svg';
+import React, { useContext, useState } from "react";
+import drinks from "assets/images/drinks.svg";
 import {
   AppBar,
   Toolbar,
@@ -14,19 +14,19 @@ import {
   Drawer,
   Avatar,
   Button,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import './index.css';
-import { Link } from 'react-router-dom';
-import { Menu as RouteMenu } from 'config/Routes/Menu.js';
-import ProfileDropdown from './ProfileDropdown';
-import { AppContext } from 'context/AppContext';
-import NotificationDropdown from './NotificationDropdown';
-import NotificationBadge from 'react-notification-badge';
-import { Effect } from 'react-notification-badge';
-import EventForm from 'views/Events/EventForm';
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import "./index.css";
+import { Link } from "react-router-dom";
+import { Menu as RouteMenu } from "config/Routes/Menu.js";
+import ProfileDropdown from "./ProfileDropdown";
+import { AppContext } from "context/AppContext";
+import NotificationDropdown from "./NotificationDropdown";
+import NotificationBadge from "react-notification-badge";
+import { Effect } from "react-notification-badge";
+import EventForm from "views/Events/EventForm";
 
 const drawerWidth = 240;
 
@@ -44,7 +44,7 @@ const Header = (props) => {
     window !== undefined ? () => window().document.body : undefined;
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         Mulakkat
       </Typography>
@@ -52,7 +52,7 @@ const Header = (props) => {
       <List>
         {RouteMenu.map((item) => (
           <ListItem key={item.name} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
+            <ListItemButton sx={{ textAlign: "center" }}>
               <Link to={item.path}>
                 <ListItemText primary={item.name} />
               </Link>
@@ -74,7 +74,7 @@ const Header = (props) => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: "flex" }}>
       <ProfileDropdown
         open={open}
         handleClose={handleClose}
@@ -92,20 +92,20 @@ const Header = (props) => {
               aria-label="open drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
+              sx={{ mr: 2, display: { sm: "none" } }}
             >
               <MenuIcon />
             </IconButton>
           )}
-          <img style={{ width: '3rem' }} src={drinks} alt="app-logo" />
+          <img style={{ width: "3rem" }} src={drinks} alt="app-logo" />
 
           <Typography
             variant="h6"
             component="div"
             sx={{
               flexGrow: 1,
-              marginLeft: '1rem',
-              display: { xs: 'block', sm: 'block' },
+              marginLeft: "1rem",
+              display: { xs: "block", sm: "block" },
             }}
           >
             <Link className="app-logo-link" to="/events">
@@ -114,13 +114,13 @@ const Header = (props) => {
           </Typography>
 
           {user && user?.email ? (
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
               <Button
                 variant="text"
                 color="black"
                 onClick={() => setOpenEventForm(true)}
               >
-                Create New Event
+                Create your event
               </Button>
               {RouteMenu.map((item) => (
                 <Link
@@ -131,7 +131,7 @@ const Header = (props) => {
                   {item.name}
                 </Link>
               ))}
-              <Link to={'/chats'}>
+              <Link to={"/chats"}>
                 <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
               </Link>
 
@@ -143,7 +143,7 @@ const Header = (props) => {
                   setNotificationAnchorEl(event.currentTarget);
                 }}
                 sx={{
-                  '&:hover ': { backgroundColor: 'transparent' },
+                  "&:hover ": { backgroundColor: "transparent" },
                 }}
               >
                 <NotificationsIcon className="header-menu-link header-menu-margin chat-icon" />
@@ -172,8 +172,8 @@ const Header = (props) => {
               </IconButton>
             </Box>
           ) : (
-            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              <Link className="header-menu-link header-menu-margin" to={'/'}>
+            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+              <Link className="header-menu-link header-menu-margin" to={"/"}>
                 Login
               </Link>
             </Box>
@@ -191,9 +191,9 @@ const Header = (props) => {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': {
-              boxSizing: 'border-box',
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
               width: drawerWidth,
             },
           }}

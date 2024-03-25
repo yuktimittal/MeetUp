@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
-import ChatBox from './components/ChatBox';
-import { TextField, Grid, Paper, Divider, List, Button } from '@mui/material';
+import React, { useState, useEffect, useContext } from "react";
+import ChatBox from "./components/ChatBox";
+import { TextField, Grid, Paper, Divider, List, Button } from "@mui/material";
 
-import './index.css';
-import { fetchChats } from 'services/ChatServices';
-import { AppContext } from 'context/AppContext';
-import SideDrawer from './components/SideDrawer';
-import GroupChatModal from './components/GroupChatModal';
-import SingleChat from './components/SingleChat';
+import "./index.css";
+import { fetchChats } from "services/ChatServices";
+import { AppContext } from "context/AppContext";
+import SideDrawer from "./components/SideDrawer";
+import GroupChatModal from "./components/GroupChatModal";
+import SingleChat from "./components/SingleChat";
 
 const Chat = () => {
   const { user, selectedChat, setSelectedChat } = useContext(AppContext);
@@ -52,7 +52,7 @@ const Chat = () => {
         )}
         <Grid container component={Paper} className="chatSection">
           <Grid item xs={3.2} className="borderRight500">
-            <Grid item xs={12} style={{ padding: '10px' }}>
+            <Grid item xs={12} style={{ padding: "10px" }}>
               <TextField
                 id="outlined-basic-email"
                 label="Search"
@@ -61,12 +61,12 @@ const Chat = () => {
                 fullWidth
               />
             </Grid>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
               <Button onClick={() => setOpenSearchDrawer(true)}>
                 Create new chat
               </Button>
               <Button onClick={() => setOpenCreateGroupChat(true)}>
-                Create NEW group
+                Create new group
               </Button>
             </div>
 
