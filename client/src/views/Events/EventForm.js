@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 import {
   Box,
   Modal,
@@ -9,20 +9,25 @@ import {
   InputLabel,
   FormControl,
   Input,
-} from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { createEvent } from 'services/EventServices';
-import { AppContext } from 'context/AppContext';
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { createEvent } from "services/EventServices";
+import { AppContext } from "context/AppContext";
+import { CITY_OPTIONS } from "constants";
+import { uploadPic } from "utils";
 
 const EventForm = ({ openEventForm, setOpenEventForm }) => {
-  const [name, setName] = useState('');
-  const [description, setDesription] = useState('');
+  const [name, setName] = useState("");
+  const [description, setDesription] = useState("");
   const [eventDate, setEventDate] = useState(null);
-  const [eventMode, setEventMode] = useState('');
+  const [eventMode, setEventMode] = useState("");
   const [loading, setLoading] = useState(false);
-  const [picture, setPicture] = useState('');
+  const [picture, setPicture] = useState("");
+  const [coverPicture, setCoverPicture] = useState("");
+  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
   const { setEventsList } = useContext(AppContext);
 
   const handleCloseEventForm = () => {
@@ -33,25 +38,25 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
     setEventMode(null);
   };
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '1px solid grey',
-    borderRadius: '0.4rem',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 500,
+    bgcolor: "background.paper",
+    border: "1px solid grey",
+    borderRadius: "0.4rem",
     boxShadow: 24,
     p: 4,
   };
   const modes = [
     {
-      value: 'Online',
-      label: 'Online',
+      value: "Online",
+      label: "Online",
     },
     {
-      value: 'Offline',
-      label: 'Offline',
+      value: "Offline",
+      label: "Offline",
     },
   ];
 
@@ -61,7 +66,10 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
       description,
       eventDate,
       eventMode,
+      city,
+      location,
       picture,
+      coverPicture,
       setOpenEventForm,
       setEventsList
     );
@@ -70,40 +78,16 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
     setDesription(null);
     setEventDate(null);
     setEventMode(null);
+    setCity(null);
+    setLocation(null);
   };
 
-  const uploadPic = (pic) => {
-    setLoading(true);
-    if (pic === undefined) {
-      console.log('Please select an image');
-      return;
-    }
-    if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
-      const data = new FormData();
-      data.append('file', pic);
-      data.append('upload_preset', 'meet-up');
-      data.append('cloud_name', 'dn02dvrtg');
-
-      fetch('https://api.cloudinary.com/v1_1/dn02dvrtg/image/upload', {
-        method: 'post',
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setPicture(data.url.toString());
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          setLoading(false);
-        });
-    } else {
-      console.log('select an image');
-      setLoading(false);
-      return;
-    }
+  const uploadEventPoster = (pic) => {
+    uploadPic(pic, setLoading, setPicture);
   };
-
+  const uploadEventCover = (pic) => {
+    uploadPic(pic, setLoading, setCoverPicture);
+  };
   return (
     <Modal open={openEventForm} onClose={handleCloseEventForm}>
       <Box sx={style}>
@@ -117,32 +101,32 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
           Create New Event
         </Typography>
         <TextField
-          label={'Name'}
+          label={"Name"}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          sx={{ mt: 2, width: '100%' }}
+          sx={{ mt: 2, width: "100%" }}
         />
         <TextField
-          label={'Description'}
+          label={"Description"}
           value={description}
           onChange={(e) => setDesription(e.target.value)}
           multiline
           rows={2}
-          sx={{ mt: 2, width: '100%' }}
+          sx={{ mt: 2, width: "100%" }}
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             value={eventDate}
             onChange={(value) => setEventDate(value)}
             label="Event Date"
-            sx={{ mt: 2, width: '100%' }}
+            sx={{ mt: 2, width: "100%" }}
           />
         </LocalizationProvider>
 
         <TextField
-          label={'Mode'}
+          label={"Mode"}
           select
-          sx={{ mt: 2, width: '100%' }}
+          sx={{ mt: 2, width: "100%" }}
           value={eventMode}
           onChange={(e) => setEventMode(e.target.value)}
         >
@@ -152,16 +136,48 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
             </MenuItem>
           ))}
         </TextField>
-        <InputLabel sx={{ mt: 2 }}>{'Upload event poster'}</InputLabel>
+
+        <TextField
+          label={"City"}
+          select
+          sx={{ mt: 2, width: "100%" }}
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        >
+          {CITY_OPTIONS.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          label={"Address"}
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          sx={{ mt: 2, width: "100%" }}
+        />
+        <InputLabel sx={{ mt: 2 }}>{"Upload event poster"}</InputLabel>
         <FormControl>
           <Input
-            sx={{ width: '45ch !important' }}
+            sx={{ width: "45ch !important" }}
             placeholder="Upload event poster"
             name="picture"
             type="file"
             accept="image/*"
             p={1.5}
-            onChange={(e) => uploadPic(e.target.files[0])}
+            onChange={(e) => uploadEventPoster(e.target.files[0])}
+          />
+        </FormControl>
+        <InputLabel sx={{ mt: 2 }}>{"Upload event cover picture"}</InputLabel>
+        <FormControl>
+          <Input
+            sx={{ width: "45ch !important" }}
+            placeholder="Upload event cover picture"
+            name="picture"
+            type="file"
+            accept="image/*"
+            p={1.5}
+            onChange={(e) => uploadEventCover(e.target.files[0])}
           />
         </FormControl>
 
@@ -171,7 +187,7 @@ const EventForm = ({ openEventForm, setOpenEventForm }) => {
           variant="contained"
           sx={{
             mt: 2,
-            width: '100%',
+            width: "100%",
           }}
         >
           Submit

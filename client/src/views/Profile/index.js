@@ -1,23 +1,35 @@
-import { Avatar, Box, IconButton } from '@mui/material';
-import './index.css';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getUserById } from 'services/UserServices';
+import { Avatar, Box, IconButton, Tab, Tabs, Typography } from "@mui/material";
 
-import AddAPhotoOutlinedIcon from '@mui/icons-material/AddAPhotoOutlined';
-import UpdateProfilePictureModal from './UpdateProfilePictureModal';
-import AboutSection from './AboutSection';
-import DetailedProfile from './DetailedProfile';
+import "./index.css";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getUserById } from "services/UserServices";
+
+import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
+import UpdateProfilePictureModal from "./UpdateProfilePictureModal";
+import AboutSection from "./AboutSection";
+import DetailedProfile from "./DetailedProfile";
+import NotFound from "./../../assets/images/404-error.png";
+import MyEventCard from "./MyEventCard";
 
 const Profile = () => {
   const { id } = useParams();
   const [profileUser, setProfileUser] = useState();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [editingAllowed, setEditingAllowed] = useState(false);
   const [aboutContent, setAboutContent] = useState();
   const [profilePic, setProfilePic] = useState();
   const [openUpdateProfileModal, setOpenUpdateProfileModal] = useState(false);
+  const [selectedTab, setSelectedTab] = useState(
+    searchParams.get("tab") || "about"
+  );
+
+  const handleTabChange = (event, newValue) => {
+    setSelectedTab(newValue);
+    setSearchParams({ ["tab"]: newValue });
+  };
 
   useEffect(() => {
     getUserById(id, setProfileUser);
@@ -29,17 +41,17 @@ const Profile = () => {
 
   const updateProfilePicture = (pic) => {
     if (pic === undefined) {
-      console.log('Please select an image');
+      console.log("Please select an image");
       return;
     }
-    if (pic.type === 'image/jpeg' || pic.type === 'image/png') {
+    if (pic.type === "image/jpeg" || pic.type === "image/png") {
       const data = new FormData();
-      data.append('file', pic);
-      data.append('upload_preset', 'meet-up');
-      data.append('cloud_name', 'dn02dvrtg');
+      data.append("file", pic);
+      data.append("upload_preset", "meet-up");
+      data.append("cloud_name", "dn02dvrtg");
 
-      fetch('https://api.cloudinary.com/v1_1/dn02dvrtg/image/upload', {
-        method: 'post',
+      fetch("https://api.cloudinary.com/v1_1/dn02dvrtg/image/upload", {
+        method: "post",
         body: data,
       })
         .then((res) => res.json())
@@ -51,10 +63,17 @@ const Profile = () => {
           console.log(err);
         });
     } else {
-      console.log('select an image');
+      console.log("select an image");
       return;
     }
   };
+  function CustomTabPanel({ index, selectedTab, content }) {
+    return (
+      <div hidden={selectedTab !== index}>
+        {selectedTab === index && <Box sx={{ p: 3 }}>{content}</Box>}
+      </div>
+    );
+  }
 
   return (
     <div className="profile-body">
@@ -76,7 +95,7 @@ const Profile = () => {
             <>
               <input
                 accept="image/*"
-                style={{ display: 'none' }}
+                style={{ display: "none" }}
                 id="icon-button-file"
                 type="file"
                 onChange={(e) => updateProfilePicture(e.target.files[0])}
@@ -85,16 +104,16 @@ const Profile = () => {
                 <IconButton
                   component="span"
                   sx={{
-                    right: '2rem',
-                    top: '4rem',
-                    '&:hover ': { backgroundColor: 'transparent' },
+                    right: "2rem",
+                    top: "4rem",
+                    "&:hover ": { backgroundColor: "transparent" },
                   }}
                 >
                   <AddAPhotoOutlinedIcon
                     type
                     sx={{
-                      fontSize: '1.8rem',
-                      color: 'primary',
+                      fontSize: "1.8rem",
+                      color: "primary",
                     }}
                   />
                 </IconButton>
@@ -102,28 +121,83 @@ const Profile = () => {
             </>
           )}
 
-          <div style={{ marginTop: '1rem' }}>
+          <div style={{ marginTop: "1rem" }}>
             <p className="profile-name">{profileUser?.name}</p>
             <p className="profile-name">{profileUser?.email}</p>
           </div>
         </Box>
       </div>
+      <Box>
+        <Box sx={{ borderBottom: 0.5, borderColor: "divider" }}>
+          <Tabs value={selectedTab} onChange={handleTabChange} centered>
+            <Tab
+              label={editingAllowed ? "Edit Profile" : "View Profile"}
+              value={"about"}
+            />
+            {editingAllowed && (
+              <Tab label="Registered Events" value={"events"} />
+            )}
+          </Tabs>
+        </Box>
 
-      <AboutSection
-        id={id}
-        profileUser={profileUser}
-        setProfileUser={setProfileUser}
-        aboutContent={aboutContent}
-        setAboutContent={setAboutContent}
-        editingAllowed={editingAllowed}
-      />
+        <CustomTabPanel
+          selectedTab={selectedTab}
+          index={"about"}
+          content={
+            <>
+              <AboutSection
+                id={id}
+                profileUser={profileUser}
+                setProfileUser={setProfileUser}
+                aboutContent={aboutContent}
+                setAboutContent={setAboutContent}
+                editingAllowed={editingAllowed}
+              />
 
-      <DetailedProfile
-        id={id}
-        editingAllowed={editingAllowed}
-        profileUser={profileUser}
-        setProfileUser={setProfileUser}
-      />
+              <DetailedProfile
+                id={id}
+                editingAllowed={editingAllowed}
+                profileUser={profileUser}
+                setProfileUser={setProfileUser}
+              />
+            </>
+          }
+        />
+        <CustomTabPanel
+          selectedTab={selectedTab}
+          index={"events"}
+          content={
+            profileUser?.registrations?.length > 0 ? (
+              <Box>
+                {profileUser?.registrations?.map((registration) => (
+                  <div key={registration?.event?._id}>
+                    <MyEventCard
+                      eventId={registration?.event?._id}
+                      eventDate={registration?.event?.eventDate}
+                      eventName={registration?.event?.name}
+                      eventPicture={registration?.event?.picture}
+                      eventCity={registration?.event?.city}
+                    />
+                  </div>
+                ))}
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  alignContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <img style={{ width: 200, height: 200 }} src={NotFound} />
+                <Typography>You haven't registered for any event</Typography>
+              </Box>
+            )
+          }
+        />
+      </Box>
     </div>
   );
 };

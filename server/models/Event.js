@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema(
@@ -12,7 +12,7 @@ const EventSchema = new Schema(
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'Category',
+      ref: "Category",
     },
     eventDate: {
       type: Date,
@@ -32,28 +32,34 @@ const EventSchema = new Schema(
     location: {
       type: String,
     },
+    city: {
+      type: String,
+    },
     picture: {
+      type: String,
+    },
+    coverPicture: {
       type: String,
     },
     createdBy: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
     },
     registrations: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'registration',
+        ref: "registration",
       },
     ],
     interests: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'interest',
+        ref: "interest",
       },
     ],
   },
   { timestamps: true }
 );
 
-const Event = mongoose.model('event', EventSchema);
+const Event = mongoose.model("event", EventSchema);
 export default Event;

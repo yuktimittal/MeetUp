@@ -14,6 +14,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
 import EventBasicDetailComponent from './components/EventBasicDetailComponent';
 import CancelIcon from '@mui/icons-material/Cancel';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const EventDrawer = ({
   selectedEvent,
@@ -21,6 +22,8 @@ const EventDrawer = ({
   setOpenEventDrawer,
   setOpenRegistrationModal,
   isUserRegistered,
+  toggleInterest,
+  isUserInterested,
 }) => {
   const toggleDrawer = (state) => (event) => {
     if (
@@ -34,6 +37,26 @@ const EventDrawer = ({
   const handleEventRegistration = () => {
     setOpenRegistrationModal(true);
   };
+  const handleInterest = () => {
+    toggleInterest(selectedEvent?._id);
+  };
+
+  const FavoriteIconButton = () => {
+    return (
+      <IconButton
+        aria-label="add to favorites"
+        size="large"
+        sx={{ padding: 0 }}
+        onClick={handleInterest}
+      >
+        {isUserInterested ? (
+          <FavoriteIcon style={{ color: '#E60000' }} />
+        ) : (
+          <FavoriteBorderOutlinedIcon />
+        )}
+      </IconButton>
+    )
+  }
 
   const drawerContent = () => (
     <Box sx={{ width: 500 }} role="presentation">
@@ -92,11 +115,13 @@ const EventDrawer = ({
           content={selectedEvent?.eventMode === 'Online' ? 'Online' : 'away'}
           value={'0 KM'}
         />
+
         <EventBasicDetailComponent
-          ImageComponent={FavoriteBorderOutlinedIcon}
+          ImageComponent={FavoriteIconButton}
           content={'Interests'}
           value={selectedEvent?.interests?.length}
         />
+
       </Box>
 
       <Divider style={{ marginTop: '1rem' }} />
