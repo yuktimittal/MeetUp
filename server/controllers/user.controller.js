@@ -22,8 +22,6 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getUserById = (req, res) => {
-  const today = moment(); // Keep today is a moment object
-
   User.findById(req.params.id)
     .populate({
       path: "registrations",
@@ -42,6 +40,10 @@ export const getUserById = (req, res) => {
       select: "event",
     })
     .then((user) => {
+      user.registrations = user.registrations.filter(
+        (registration) =>
+          new Date(registration?.event?.eventDate) - new Date() >= 0
+      );
       if (user) {
         res.status(200).json(user);
       } else {
