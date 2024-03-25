@@ -127,7 +127,9 @@ const EventDetails = () => {
           <img
             className="event-details-cover"
             src={
-              selectedEvent?.picture ? selectedEvent?.picture : defaultPicture
+              selectedEvent?.coverPicture
+                ? selectedEvent?.coverPicture
+                : defaultPicture
             }
             alt=""
           />
@@ -202,7 +204,11 @@ const EventDetails = () => {
         >
           Venue
         </Typography>
-        <Typography sx={{ paddingLeft: "1rem" }}>{"lorem ipsum "}</Typography>
+        <Typography sx={{ paddingLeft: "1rem" }}>
+          {selectedEvent?.location
+            ? selectedEvent?.location
+            : "Jai Club, Jaipur"}
+        </Typography>
       </Box>
     </>
   );

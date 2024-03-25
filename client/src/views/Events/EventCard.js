@@ -3,19 +3,7 @@ import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 import defaultPicture from "assets/images/bg.jpg";
 import { Link } from "react-router-dom";
 
-const EventCard = ({
-  eventId,
-  eventTitle,
-  date,
-  eventDescription,
-  picture,
-  isUserRegistered,
-  isUserInterested,
-  setSelectedEventId,
-  setOpenEventDrawer,
-  setOpenRegistrationModal,
-  toggleInterest,
-}) => {
+const EventCard = ({ eventId, eventTitle, date, picture, location }) => {
   return (
     <Card sx={{ width: 300 }}>
       <Link to={`/eventDetails/${eventId}`} style={{ textDecoration: "none" }}>
@@ -56,7 +44,7 @@ const EventCard = ({
               textOverflow: "ellipsis",
             }}
           >
-            Jai Club: Jaipur
+            {location ? location : "Jai Club: Jaipur"}
           </Typography>
         </CardContent>
       </Link>
