@@ -122,15 +122,7 @@ const Header = (props) => {
               >
                 Create your event
               </Button>
-              {RouteMenu.map((item) => (
-                <Link
-                  key={item.name}
-                  className="header-menu-link header-menu-margin"
-                  to={item.path}
-                >
-                  {item.name}
-                </Link>
-              ))}
+
               <Link to={"/chats"}>
                 <ChatOutlinedIcon className="header-menu-link header-menu-margin chat-icon"></ChatOutlinedIcon>
               </Link>
